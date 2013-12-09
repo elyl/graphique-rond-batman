@@ -43,6 +43,8 @@ public class Dessin extends JPanel implements Observer {
     
     public void dessiner(Graphics2D g, Motif m) {
 	g.setColor(m.getColor());
+	g.fill(m.getShape());
+	g.setColor(m.getBorderColor());
 	g.draw(m.getShape());
     }
     
