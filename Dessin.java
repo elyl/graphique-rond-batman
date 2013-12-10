@@ -13,10 +13,11 @@ public class Dessin extends JPanel implements Observer {
     private int height;
     private List<Motif> motifs;
     
-    public Dessin() {
+    public Dessin(Controleur c) {
 	this.width = 800;
 	this.height = 600;
 	this.motifs = new ArrayList<Motif>();
+	this.addMouseListener(c);
 	repaint();
     }
 
@@ -87,7 +88,22 @@ public class Dessin extends JPanel implements Observer {
     public void supprimerMotif(int indice) {
 	motifs.remove(indice);
     }
-	
+
+    public Motif getShape(Point p)
+    {
+	Iterator<Motif>	itr;
+	Motif		tmp;
+
+	itr = motifs.iterator();
+	while (itr.hasNext())
+	    {
+		tmp = itr.next();
+		if (tmp.getShape().contains(p))
+		    return (tmp);
+	    }
+	return (null);
+    }
+    
     public String toString() {
 	return "";
     }
