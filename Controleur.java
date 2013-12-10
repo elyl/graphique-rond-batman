@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.Dimension;
-import java.awt.Shape;
 import java.awt.event.*;
 
 public class Controleur
@@ -40,61 +39,25 @@ public class Controleur
 	    s = tmp;
 	}
 
-	public void mouseEntered(MouseEvent e)
-	{}
-	
-	public void mouseExited(MouseEvent e)
-	{}
-	
 	public void mousePressed(MouseEvent e)
 	{}
 
 	public void mouseReleased(MouseEvent e)
-	{}
-
-	public void keyPressed(KeyEvent e)
-	{}
-	
-	public void keyReleased(KeyEvent e)
 	{}
 
 	public void keyTyped(KeyEvent e)
 	{
-	    if (e.getKeyCode() == KeyEvent.VK_ENTER)
+	    if (e.getKeyChar() == 127)
 		d.supprimerMotif(s);
-	    System.out.println(e.getKeyCode());
 	}
     }
 
-    private class ControleurMenu implements MouseListener
+    private class ControleurMenu extends MouseAdapter
     {
-	public void mouseClicked(MouseEvent e)
-	{}
-
-	public void mouseEntered(MouseEvent e)
-	{}
-	
-	public void mouseExited(MouseEvent e)
-	{}
-	
-	public void mousePressed(MouseEvent e)
-	{}
-
-	public void mouseReleased(MouseEvent e)
-	{}
     }
     
-    private class ControleurProprietees implements KeyListener
-    {
-	public void keyPressed(KeyEvent e)
-	{}
-
-	public void keyReleased(KeyEvent e)
-	{}
-	
-	public void keyTyped(KeyEvent e)
-	{}
-    }
+    private class ControleurProprietees extends KeyAdapter
+    {}
 	
     public static void main(String args[])
     {

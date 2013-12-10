@@ -6,9 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.EventListener;
 import javax.swing.*;
-import java.awt.event.*;
 
 public class Dessin extends JPanel implements Observer {
     private int	width;
