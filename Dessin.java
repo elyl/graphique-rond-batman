@@ -7,13 +7,14 @@ import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
+import java.awt.event.*;
 
 public class Dessin extends JPanel implements Observer {
     private int	width;
     private int height;
     private List<Motif> motifs;
     
-    public Dessin(Controleur c) {
+    public Dessin(MouseListener c) {
 	this.width = 800;
 	this.height = 600;
 	this.motifs = new ArrayList<Motif>();
