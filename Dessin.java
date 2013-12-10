@@ -83,7 +83,7 @@ public class Dessin extends JPanel implements Observer {
     public void setHeight(int h) {
 	this.height = h;
     }
-	
+
     public void setMotifs(List<Motif> motifs) {
 	this.motifs = motifs;
     }
@@ -92,7 +92,7 @@ public class Dessin extends JPanel implements Observer {
 	motifs.remove(motif);
 	repaint();
     }
-	
+    
     public void supprimerMotif(int indice) {
 	motifs.remove(indice);
 	repaint();

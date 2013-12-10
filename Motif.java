@@ -55,6 +55,5 @@ public class Motif extends Observable {
 	this.borderColor = borderColor;
 	setChanged();
 	notifyObservers();
-
     }
 }
