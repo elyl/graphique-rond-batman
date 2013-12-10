@@ -1,6 +1,6 @@
 import java.awt.event.*;
 
-public abstract class KeyMouseListener implements KeyListener, MouseListener
+public abstract class KeyMouseListener implements KeyListener, MouseListener, MouseMotionListener
 {
     public void keyPressed(KeyEvent e)
     {}
@@ -13,4 +13,7 @@ public abstract class KeyMouseListener implements KeyListener, MouseListener
 
     public void mouseExited(MouseEvent e)
     {}
+
+    public void mouseMoved(MouseEvent e)
+    {};
 }

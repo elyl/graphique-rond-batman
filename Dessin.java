@@ -19,6 +19,7 @@ public class Dessin extends JPanel implements Observer {
 	this.motifs = new ArrayList<Motif>();
 	this.addMouseListener(c);
 	this.addKeyListener(c);
+	this.addMouseMotionListener(c);
 	this.setFocusable(true);
 	this.requestFocus();
 	repaint();

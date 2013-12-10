@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.event.*;
@@ -58,6 +57,17 @@ public class Controleur
 		{
 		    s.setX(s.getX() + e.getX() - x);
 		    s.setY(s.getY() + e.getY() - y);
+		}
+	}
+
+	public void mouseDragged(MouseEvent e)
+	{
+	    if (s != null)
+		{
+		    s.setX(s.getX() + e.getX() - x);
+		    s.setY(s.getY() + e.getY() - y);
+		    x = e.getX();
+		    y = e.getY();
 		}
 	}
 

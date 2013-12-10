@@ -9,14 +9,28 @@ public class Motif extends Observable {
     private boolean	selected;
     private int		x;
     private int		y;
+    private int		width;
+    private int		height;
 
     public Motif(int x, int y, Color color)
     {
+	this(x, y, 50, 50, color);
+    }
+
+    public Motif(int x, int y, int width, int height, Color color)
+    {
 	this.x = x;
 	this.y = y;
+	this.width = width;
+	this.height = height;
 	this.color = color;
 	this.borderColor = color;
-	this.s = new Rectangle(x, y, 100, 200);
+	this.s = new Rectangle(x, y, width, height);
+    }
+
+    public Motif()
+    {
+	this(0, 0, 50, 50, Color.BLUE);
     }
 
     public void setSelected(boolean selected)
@@ -45,6 +59,18 @@ public class Motif extends Observable {
 	updateShape();
     }
 
+    public void setWidth(int width)
+    {
+	this.width = width;
+	updateShape();
+    }
+    
+    public void setHeight(int height)
+    {
+	this.height = height;
+	updateShape();
+    }
+
     public int getX()
     {
 	return (this.x);
@@ -53,6 +79,16 @@ public class Motif extends Observable {
     public int getY()
     {
 	return (this.y);
+    }
+
+    public int getWidth()
+    {
+	return (this.width);
+    }
+
+    public int getHeight()
+    {
+	return (this.height);
     }
 
     public Shape getShape()
@@ -86,7 +122,7 @@ public class Motif extends Observable {
 
     public void updateShape()
     {
-	this.s = new Rectangle(x, y, 100, 200);
+	this.s = new Rectangle(x, y, width, height);
 	setChanged();
 	notifyObservers();
     }
