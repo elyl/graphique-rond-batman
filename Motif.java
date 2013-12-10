@@ -5,12 +5,27 @@ import java.util.Observable;
 public class Motif extends Observable {
     private Color	color, borderColor;
     private Shape	s;
+    private boolean	selected;
 
-    public Motif(Color color, Color borderColor, Shape s)
+    public Motif(Color color, Shape s)
     {
 	this.s = s;
 	this.color = color;
-	this.borderColor = borderColor;
+	this.borderColor = color;
+    }
+
+    public void setSelected(boolean selected)
+    {
+	if (selected == true)
+	    this.borderColor = Color.BLACK;
+	else
+	    this.borderColor = this.color;
+	if (selected != this.selected)
+	    {
+		setChanged();
+		notifyObservers();
+	    }
+	this.selected = selected;
     }
 
     public Shape getShape()

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.EventListener;
 import javax.swing.*;
 import java.awt.event.*;
 
@@ -14,11 +15,14 @@ public class Dessin extends JPanel implements Observer {
     private int height;
     private List<Motif> motifs;
     
-    public Dessin(MouseListener c) {
+    public Dessin(KeyMouseListener c) {
 	this.width = 800;
 	this.height = 600;
 	this.motifs = new ArrayList<Motif>();
 	this.addMouseListener(c);
+	this.addKeyListener(c);
+	this.setFocusable(true);
+	this.requestFocus();
 	repaint();
     }
 
@@ -37,6 +41,8 @@ public class Dessin extends JPanel implements Observer {
 	
     public void ajouterMotif(Motif motifSelectionne) {
 	motifs.add(motifSelectionne);
+	motifSelectionne.addObserver(this);
+	repaint();
     }
     
     /*public boolean createObject(String name) {
@@ -84,10 +90,12 @@ public class Dessin extends JPanel implements Observer {
     
     public void supprimerMotif(Motif motif) {
 	motifs.remove(motif);
+	repaint();
     }
 	
     public void supprimerMotif(int indice) {
 	motifs.remove(indice);
+	repaint();
     }
 
     public Motif getShape(Point p)
