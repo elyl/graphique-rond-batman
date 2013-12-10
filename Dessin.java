@@ -10,110 +10,94 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class Dessin extends JPanel implements Observer {
-    private int	width;
-    private int height;
-    private List<Motif> motifs;
-    
-    public Dessin(MouseListener c) {
-	this.width = 800;
-	this.height = 600;
-	this.motifs = new ArrayList<Motif>();
-	this.addMouseListener(c);
-	repaint();
-    }
+	private int width;
+	private int height;
+	private List<Motif> motives;
 
-    public void paintComponent(Graphics g)
-    {
-	super.paintComponent(g);
-	Graphics2D g2D = (Graphics2D)g;
-	
-	toutDessiner(g2D);
-    }
-    
-    public void update(Observable o, Object arg)
-    {
-	repaint();
-    }
-	
-    public void ajouterMotif(Motif motifSelectionne) {
-	motifs.add(motifSelectionne);
-    }
-    
-    /*public boolean createObject(String name) {
-	return true;
-	}*/
-    
-    public void dessiner(Graphics2D g, Motif m) {
-	g.setColor(m.getColor());
-	g.fill(m.getShape());
-	g.setColor(m.getBorderColor());
-	g.draw(m.getShape());
-    }
-    
-    /*	public Motif effacerMotif(Point point) {
-	return this.motifs.remove(point)
-	}*/
-    
-    /*public boolean find(Point point) {
-	return true;
-    }*/
-    
-    public int getWidth() {
-	return width;
-    }
-    
-    public int getHeight() {
-	return height;
-    }
-    
-    public List<Motif> getMotifs() {
-	return motifs;
-    }
-    
-    public void setWidth(int l) {
-	this.width = l;
-    }
-    
-    public void setHeight(int h) {
-	this.height = h;
-    }
-	
-    public void setMotifs(List<Motif> motifs) {
-	this.motifs = motifs;
-    }
-    
-    public void supprimerMotif(Motif motif) {
-	motifs.remove(motif);
-    }
-	
-    public void supprimerMotif(int indice) {
-	motifs.remove(indice);
-    }
+	public Dessin(MouseListener c) {
+		this.width = 800;
+		this.height = 600;
+		this.motives = new ArrayList<Motif>();
+		this.addMouseListener(c);
+		repaint();
+	}
 
-    public Motif getShape(Point p)
-    {
-	Iterator<Motif>	itr;
-	Motif		tmp;
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2D = (Graphics2D) g;
 
-	itr = motifs.iterator();
-	while (itr.hasNext())
-	    {
-		tmp = itr.next();
-		if (tmp.getShape().contains(p))
-		    return (tmp);
-	    }
-	return (null);
-    }
-    
-    public String toString() {
-	return "";
-    }
-    
-    public void toutDessiner(Graphics2D g) {
-	Iterator<Motif>	itr;
+		toutDessiner(g2D);
+	}
 
-	itr = motifs.iterator();
-	while (itr.hasNext())
-	    dessiner(g, itr.next());
-    }
+	public void update(Observable o, Object arg) {
+		repaint();
+	}
+
+	public void ajouterMotif(Motif motifSelectionne) {
+		motives.add(motifSelectionne);
+	}
+
+	public void dessiner(Graphics2D g, Motif m) {
+		g.setColor(m.getColor());
+		g.fill(m.getShape());
+		g.setColor(m.getBorderColor());
+		g.draw(m.getShape());
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public List<Motif> getMotifs() {
+		return motives;
+	}
+
+	public void setWidth(int l) {
+		this.width = l;
+	}
+
+	public void setHeight(int h) {
+		this.height = h;
+	}
+
+	public void setMotifs(List<Motif> motifs) {
+		this.motives = motifs;
+	}
+
+	public void supprimerMotif(Motif motif) {
+		motives.remove(motif);
+	}
+
+	public void supprimerMotif(int indice) {
+		motives.remove(indice);
+	}
+
+	public Motif getShape(Point p) {
+		Iterator<Motif> itr;
+		Motif tmp;
+
+		itr = motives.iterator();
+		while (itr.hasNext()) {
+			tmp = itr.next();
+			if (tmp.getShape().contains(p))
+				return (tmp);
+		}
+		return (null);
+	}
+
+	public String toString() {
+		return "";
+	}
+
+	public void toutDessiner(Graphics2D g) {
+		Iterator<Motif> itr;
+
+		itr = motives.iterator();
+		while (itr.hasNext())
+			dessiner(g, itr.next());
+	}
 }
