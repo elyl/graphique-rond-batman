@@ -9,9 +9,13 @@ public class Controleur
     private Dessin		d;
     private JFrame		f;
 
+    /* Variables temporaires le temps du dev*/
+    private JFrame		f2;
+    private boolean		s;
+
     public Controleur()
     {
-	f = new JFrame("tutu");
+	f = new JFrame("Dessin vectoriel");
 	d = new Dessin(new ControleurDessin());
 	f.setPreferredSize(new Dimension(800, 600));
 	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -20,11 +24,18 @@ public class Controleur
 	d.ajouterMotif(new Motif(200, 200, Color.PINK));
 	f.pack();
 	f.setVisible(true);
+
+	/* DEV */
+	f2 = new JFrame("Menu");
+	f2.add(new Menu(new ControleurMenu()));
+	f2.pack();
+	f2.setVisible(true);
+	
     }
 
     private class ControleurDessin extends KeyMouseListener
     {
-	private Motif	s;
+	private Motif	m;
 	private int	x;
 	private int	y;
 
@@ -32,6 +43,7 @@ public class Controleur
 	{
 	    selectItem(new Point(e.getX(), e.getY()));
 	}
+
 	public void selectItem(Point p)
 	{
 	   Motif	tmp;
@@ -39,47 +51,63 @@ public class Controleur
 	   tmp = d.getShape(p);
 	    if (tmp != null)
 		tmp.setSelected(true);
-	    if (s != null && s != tmp)
-		s.setSelected(false);
-	    s = tmp;
+	    if (m != null && m != tmp)
+		m.setSelected(false);
+	    m = tmp;
 	}
 
 	public void mousePressed(MouseEvent e)
 	{
-	    selectItem(new Point(e.getX(), e.getY()));
 	    x = e.getX();
 	    y = e.getY();
+	    if (s)
+		{
+		    m = new Motif(x, y, 0, 0, Color.PINK);
+		    d.ajouterMotif(m);
+		}
+	    else
+		selectItem(new Point(e.getX(), e.getY()));
 	}
 
 	public void mouseReleased(MouseEvent e)
 	{
-	    if (s != null)
+	    if (m != null && !s)
 		{
-		    s.setX(s.getX() + e.getX() - x);
-		    s.setY(s.getY() + e.getY() - y);
+		    m.setX(m.getX() + e.getX() - x);
+		    m.setY(m.getY() + e.getY() - y);
 		}
+	    s = false;
 	}
 
 	public void mouseDragged(MouseEvent e)
 	{
-	    if (s != null)
+	    if (m != null && !s)
 		{
-		    s.setX(s.getX() + e.getX() - x);
-		    s.setY(s.getY() + e.getY() - y);
+		    m.setX(m.getX() + e.getX() - x);
+		    m.setY(m.getY() + e.getY() - y);
 		    x = e.getX();
 		    y = e.getY();
+		}
+	    else if (m != null)
+		{
+		    m.setWidth(e.getX() - x);
+		    m.setHeight(e.getY() - y);
 		}
 	}
 
 	public void keyTyped(KeyEvent e)
 	{
 	    if (e.getKeyChar() == 127)
-		d.supprimerMotif(s);
+		d.supprimerMotif(m);
 	}
     }
 
-    private class ControleurMenu extends MouseAdapter
+    private class ControleurMenu implements ActionListener
     {
+	public void actionPerformed(ActionEvent e)
+	{
+	    s = true;
+	}
     }
     
     private class ControleurProprietees extends KeyAdapter
