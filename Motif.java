@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.Rectangle;
+import java.awt.geom.Ellipse2D.Double;
+import java.awt.geom.*;
 import java.util.Observable;
 
 public class Motif extends Observable {
@@ -25,7 +27,7 @@ public class Motif extends Observable {
 	this.height = height;
 	this.color = color;
 	this.borderColor = color;
-	this.s = new Rectangle(x, y, width, height);
+	this.s = new Ellipse2D.Double(x, y, width, height);
     }
 
     public Motif()
@@ -68,6 +70,13 @@ public class Motif extends Observable {
     public void setHeight(int height)
     {
 	this.height = height;
+	updateShape();
+    }
+
+    public void resize(int width, int height)
+    {
+	this.height = height;
+	this.width = width;
 	updateShape();
     }
 
@@ -122,7 +131,7 @@ public class Motif extends Observable {
 
     public void updateShape()
     {
-	this.s = new Rectangle(x, y, width, height);
+	this.s = new Ellipse2D.Double(x, y, width, height);
 	setChanged();
 	notifyObservers();
     }

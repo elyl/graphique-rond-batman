@@ -3,18 +3,34 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.util.logging.*;
 
 public class Controleur
 {
     private Dessin		d;
     private JFrame		f;
+    private boolean		s;
+    private Color		currentColor;
 
     /* Variables temporaires le temps du dev*/
     private JFrame		f2;
-    private boolean		s;
+    private Logger		logger;
 
     public Controleur()
     {
+	Handler	fh;
+	/* LOG */
+	try
+	    {
+		logger = Logger.getLogger("MyLog");
+		fh = new FileHandler("log.txt");
+		logger.addHandler(fh);
+		fh.setFormatter(new SimpleFormatter());
+	    }
+	catch (Exception e)
+	    { e.printStackTrace(); }
+	logger.info("Hey i just met you");
+
 	f = new JFrame("Dessin vectoriel");
 	d = new Dessin(new ControleurDessin());
 	f.setPreferredSize(new Dimension(800, 600));
@@ -30,6 +46,7 @@ public class Controleur
 	f2.add(new Menu(new ControleurMenu()));
 	f2.pack();
 	f2.setVisible(true);
+	currentColor = Color.PINK;
 	
     }
 
@@ -62,7 +79,7 @@ public class Controleur
 	    y = e.getY();
 	    if (s)
 		{
-		    m = new Motif(x, y, 0, 0, Color.PINK);
+		    m = new Motif(x, y, 0, 0, currentColor);
 		    d.ajouterMotif(m);
 		}
 	    else
@@ -90,8 +107,7 @@ public class Controleur
 		}
 	    else if (m != null)
 		{
-		    m.setWidth(e.getX() - x);
-		    m.setHeight(e.getY() - y);
+		    m.resize(e.getX() - x, e.getY() - y);
 		}
 	}
 
