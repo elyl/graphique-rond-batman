@@ -23,13 +23,12 @@ public class Controleur
 	try
 	    {
 		logger = Logger.getLogger("MyLog");
-		fh = new FileHandler("log.txt");
+		fh = new FileHandler("log.txt", true);
 		logger.addHandler(fh);
 		fh.setFormatter(new SimpleFormatter());
 	    }
 	catch (Exception e)
 	    { e.printStackTrace(); }
-	logger.info("Hey i just met you");
 
 	f = new JFrame("Dessin vectoriel");
 	d = new Dessin(new ControleurDessin());
@@ -59,6 +58,7 @@ public class Controleur
 	public void mouseClicked(MouseEvent e)
 	{
 	    selectItem(new Point(e.getX(), e.getY()));
+	    logger.info("Clic: x=" + e.getX() + ", y=" + e.getY()); /* LOG */
 	}
 
 	public void selectItem(Point p)
@@ -67,9 +67,17 @@ public class Controleur
 
 	   tmp = d.getShape(p);
 	    if (tmp != null)
-		tmp.setSelected(true);
+		{
+		    tmp.setSelected(true);
+		    logger.info(tmp.toString() + " selectione"); /* LOG */
+		}
+	    else
+		logger.info("Aucun objet selectione"); /* LOG */
 	    if (m != null && m != tmp)
-		m.setSelected(false);
+		{
+		    m.setSelected(false);
+		    logger.info(tmp.toString() + " deselectione"); /* LOG */
+		}
 	    m = tmp;
 	}
 

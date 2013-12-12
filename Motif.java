@@ -135,4 +135,9 @@ public class Motif extends Observable {
 	setChanged();
 	notifyObservers();
     }
+
+    public String toString()
+    {
+	return (color.toString() + " " + s.toString());
+    }
 }
