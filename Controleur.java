@@ -76,7 +76,7 @@ public class Controleur
 	    if (m != null && m != tmp)
 		{
 		    m.setSelected(false);
-		    logger.info(tmp.toString() + " deselectione"); /* LOG */
+		    logger.info(m.toString() + " deselectione"); /* LOG */
 		}
 	    m = tmp;
 	}
@@ -89,6 +89,7 @@ public class Controleur
 		{
 		    m = new Motif(x, y, 0, 0, currentColor);
 		    d.ajouterMotif(m);
+		    logger.info("Creation et ajout de " + m); /* LOG */
 		}
 	    else
 		selectItem(new Point(e.getX(), e.getY()));
@@ -112,11 +113,14 @@ public class Controleur
 		    m.setY(m.getY() + e.getY() - y);
 		    x = e.getX();
 		    y = e.getY();
+		    logger.info("Deplacement de " + m + " aux coordonees " + x + " + y"); /* LOG */
 		}
 	    else if (m != null)
 		{
 		    m.resize(e.getX() - x, e.getY() - y);
+		    logger.info("Redimensionement: " + m);
 		}
+	    logger.info("Deplacement souris: " + e.getX() + " " + e.getY()); /* LOG */
 	}
 
 	public void keyTyped(KeyEvent e)
