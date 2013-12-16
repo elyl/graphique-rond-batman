@@ -9,7 +9,7 @@ public class Controleur
 {
     private Dessin		d;
     private JFrame		f;
-    private boolean		s;
+    private int			s;
     private Color		currentColor;
 
     /* Variables temporaires le temps du dev*/
@@ -76,7 +76,7 @@ public class Controleur
 	    if (m != null && m != tmp)
 		{
 		    m.setSelected(false);
-		    logger.info(tmp.toString() + " deselectione"); /* LOG */
+		    logger.info(m.toString() + " deselectione"); /* LOG */
 		}
 	    m = tmp;
 	}
@@ -85,9 +85,9 @@ public class Controleur
 	{
 	    x = e.getX();
 	    y = e.getY();
-	    if (s)
+	    if (s != 0)
 		{
-		    m = new Motif(x, y, 0, 0, currentColor);
+		    m = new Motif(x, y, 0, 0, currentColor, s);
 		    d.ajouterMotif(m);
 		}
 	    else
@@ -96,17 +96,17 @@ public class Controleur
 
 	public void mouseReleased(MouseEvent e)
 	{
-	    if (m != null && !s)
+	    if (m != null && s == 0)
 		{
 		    m.setX(m.getX() + e.getX() - x);
 		    m.setY(m.getY() + e.getY() - y);
 		}
-	    s = false;
+	    s = Motif.NULL;
 	}
 
 	public void mouseDragged(MouseEvent e)
 	{
-	    if (m != null && !s)
+	    if (m != null && s == Motif.NULL)
 		{
 		    m.setX(m.getX() + e.getX() - x);
 		    m.setY(m.getY() + e.getY() - y);
@@ -121,8 +121,10 @@ public class Controleur
 
 	public void keyTyped(KeyEvent e)
 	{
+	    System.out.println(e.getKeyCode());
 	    if (e.getKeyChar() == 127)
 		d.supprimerMotif(m);
+	    logger.info("Clavier: " + e.getKeyChar());
 	}
     }
 
@@ -130,7 +132,10 @@ public class Controleur
     {
 	public void actionPerformed(ActionEvent e)
 	{
-	    s = true;
+	    if (e.getActionCommand().equals("Rectangle"))
+		s = Motif.RECTANGLE;
+	    else if (e.getActionCommand().equals("Ellipse"))
+		s = Motif.ELLIPSE;
 	}
     }
     

@@ -1,11 +1,15 @@
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.Rectangle;
-import java.awt.geom.Ellipse2D.Double;
 import java.awt.geom.*;
 import java.util.Observable;
 
 public class Motif extends Observable {
+    public static final int	NULL = 0;
+    public static final int	RECTANGLE = 1;
+    public static final int	ELLIPSE = 2;
+    public static final int	LINE = 3;
+
     private Color	color, borderColor;
     private Shape	s;
     private boolean	selected;
@@ -13,6 +17,7 @@ public class Motif extends Observable {
     private int		y;
     private int		width;
     private int		height;
+    private int		shapeType;
 
     public Motif(int x, int y, Color color)
     {
@@ -21,13 +26,32 @@ public class Motif extends Observable {
 
     public Motif(int x, int y, int width, int height, Color color)
     {
+	this(x, y, width, height, color, Motif.RECTANGLE);
+    }
+
+    public Motif(int x, int y, int width, int height, Color color, int shape)
+    {
 	this.x = x;
 	this.y = y;
 	this.width = width;
 	this.height = height;
 	this.color = color;
 	this.borderColor = color;
-	this.s = new Ellipse2D.Double(x, y, width, height);
+	this.shapeType = shape;
+	initShape();
+    }
+
+    private void initShape()
+    {
+	switch (shapeType)
+	    {
+	    case Motif.RECTANGLE:
+		this.s = new Rectangle(this.x, this.y, this.width, this.height);
+		break;
+	    case Motif.ELLIPSE:
+		this.s = new Ellipse2D.Double(this.x, this.y, this.width, this.height);
+		break;
+	    }
     }
 
     public Motif()
@@ -131,7 +155,7 @@ public class Motif extends Observable {
 
     public void updateShape()
     {
-	this.s = new Ellipse2D.Double(x, y, width, height);
+	initShape();
 	setChanged();
 	notifyObservers();
     }
