@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
@@ -87,7 +88,10 @@ public class Controleur
 	    y = e.getY();
 	    if (s != 0)
 		{
+		    if (m != null)
+			m.setSelected(false);
 		    m = new Motif(x, y, 0, 0, currentColor, s);
+		    m.setSelected(true);
 		    d.ajouterMotif(m);
 		    logger.info("Creation et ajout de " + m); /* LOG */
 		}
@@ -125,14 +129,13 @@ public class Controleur
 
 	public void keyTyped(KeyEvent e)
 	{
-	    System.out.println(e.getKeyCode());
 	    if (e.getKeyChar() == 127)
 		d.supprimerMotif(m);
 	    logger.info("Clavier: " + e.getKeyChar());
 	}
     }
 
-    private class ControleurMenu implements ActionListener
+    private class ControleurMenu extends ListActionListener
     {
 	public void actionPerformed(ActionEvent e)
 	{
@@ -140,6 +143,15 @@ public class Controleur
 		s = Motif.RECTANGLE;
 	    else if (e.getActionCommand().equals("Ellipse"))
 		s = Motif.ELLIPSE;
+	}
+
+	public void valueChanged(ListSelectionEvent e)
+	{
+	    int	index;
+
+	    index = (!Menu.COLORLIST[e.getFirstIndex()].equals(currentColor)) ? e.getFirstIndex() : e.getLastIndex();
+	    if (e.getValueIsAdjusting())
+		currentColor = Menu.COLORLIST[index];
 	}
     }
     
