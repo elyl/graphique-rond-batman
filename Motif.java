@@ -104,6 +104,15 @@ public class Motif extends Observable {
 	updateShape();
     }
 
+    public void resizeAndMove(int x, int y, int width, int height)
+    {
+	this.x = x;
+	this.y = y;
+	this.width = width;
+	this.height = height;
+	updateShape();
+    }
+
     public int getX()
     {
 	return (this.x);

@@ -30,7 +30,7 @@ public class Menu extends JPanel
 	tmp = new JButton("Polygone");
 	tmp.addActionListener(e);
 	add(tmp);
-	box = new JComboBox<String>(generateStringColorList());
+	box = new JComboBox(generateStringColorList());
 	box.addActionListener(e);
 	add(box);
     }

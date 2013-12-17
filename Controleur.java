@@ -1,6 +1,5 @@
 import javax.swing.*;
 import javax.swing.event.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
@@ -11,9 +10,11 @@ import java.util.logging.*;
 public class Controleur
 {
     private Dessin		d;
+    private Proprietees		prop;
     private JFrame		f;
     private int			s;
     private Color		currentColor;
+    private Motif		m;
 
     /* Variables temporaires le temps du dev*/
     private JFrame		f2;
@@ -45,23 +46,24 @@ public class Controleur
 	f.setVisible(true);
 
 	/* DEV */
-	/*f2 = new JFrame("Menu");
-	f2.add(new Menu(new ControleurMenu()));
+	prop = new Proprietees(new ControleurProprietees());
+	f2 = new JFrame("Menu");
+	f2.setPreferredSize(new Dimension(400, 200));
+	f2.add(prop);
 	f2.pack();
 	f2.setVisible(true);
-	*/
 	currentColor = Color.PINK;
 	
     }
 
     private class ControleurDessin extends KeyMouseListener
     {
-	private Motif	m;
 	private int	x;
 	private int	y;
 
 	public void mouseClicked(MouseEvent e)
 	{
+	    d.requestFocus();
 	    selectItem(new Point(e.getX(), e.getY()));
 	    logger.info("Clic: x=" + e.getX() + ", y=" + e.getY()); /* LOG */
 	}
@@ -74,6 +76,7 @@ public class Controleur
 	    if (tmp != null)
 		{
 		    tmp.setSelected(true);
+		    prop.updateData(tmp);
 		    logger.info(tmp.toString() + " selectione"); /* LOG */
 		}
 	    else
@@ -97,10 +100,13 @@ public class Controleur
 		    m = new Motif(x, y, 0, 0, currentColor, s);
 		    m.setSelected(true);
 		    d.ajouterMotif(m);
+		    //selectItem(new Point(x, y));
+		    prop.updateData(m);
 		    logger.info("Creation et ajout de " + m); /* LOG */
 		}
 	    else
-		selectItem(new Point(e.getX(), e.getY()));
+		selectItem(new Point(x, y));
+		System.out.println(m);
 	}
 
 	public void mouseReleased(MouseEvent e)
@@ -143,21 +149,32 @@ public class Controleur
     {
 	public void actionPerformed(ActionEvent e)
 	{
-		JComboBox src;
+	    JComboBox src;
+	    
 	    if (e.getActionCommand().equals("Rectangle"))
 		s = Motif.RECTANGLE;
 	    else if (e.getActionCommand().equals("Ellipse"))
 		s = Motif.ELLIPSE;
 	    else if (e.getActionCommand().equals("comboBoxChanged")){
-	    	src=(JComboBox) e.getSource();
-	    	currentColor=Menu.COLORLIST[src.getSelectedIndex()];
+	    	src = (JComboBox) e.getSource();
+	    	currentColor = Menu.COLORLIST[src.getSelectedIndex()];
 	    }
 	    d.requestFocus();
 	}
     }
     
     private class ControleurProprietees extends KeyAdapter
-    {}
+    {
+	public void keyTyped(KeyEvent e)
+	{
+	    logger.info(e.toString());
+	    if (e.getKeyChar() == 10)
+		{
+		    m.resizeAndMove(Integer.parseInt(prop.getfX()), Integer.parseInt(prop.getfY()), Integer.parseInt(prop.getfWidth()), Integer.parseInt(prop.getfHeight()));
+		}
+	    d.requestFocus();
+	}
+    }
 	
     public static void main(String args[])
     {
