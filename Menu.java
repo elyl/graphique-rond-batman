@@ -11,13 +11,13 @@ public class Menu extends JPanel
 {
     public static final Color COLORLIST[] = {Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.GRAY, Color.GREEN, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.WHITE, Color.YELLOW};
 
-    public Menu(ListActionListener e)
+    public Menu(ActionListener e)
     {
-	JButton	tmp;
-	JList<String>	l;
+	JButton		tmp;
+	JComboBox	box;
 
-	setPreferredSize(new Dimension(300, 300));
-	setLayout(new GridLayout(4, 1));
+	setPreferredSize(new Dimension(150, 50));
+	setLayout(new GridLayout(1, 4));
 	tmp = new JButton("Rectangle");
 	tmp.addActionListener(e);
 	add(tmp);
@@ -27,9 +27,12 @@ public class Menu extends JPanel
 	tmp = new JButton("Ellipse");
 	tmp.addActionListener(e);
 	add(tmp);
-	l = new JList<String>(generateStringColorList());
-	l.addListSelectionListener(e);
-	add(l);
+	tmp = new JButton("Polygone");
+	tmp.addActionListener(e);
+	add(tmp);
+	box = new JComboBox<String>(generateStringColorList());
+	box.addActionListener(e);
+	add(box);
     }
 
     public Vector<String> generateStringColorList()
