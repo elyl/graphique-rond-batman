@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.*;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
@@ -35,17 +37,19 @@ public class Controleur
 	d = new Dessin(new ControleurDessin());
 	f.setPreferredSize(new Dimension(800, 600));
 	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	f.add(d);
+	f.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
 	d.ajouterMotif(new Motif(50, 50, Color.GREEN));
 	d.ajouterMotif(new Motif(200, 200, Color.PINK));
+	f.add(d);
 	f.pack();
 	f.setVisible(true);
 
 	/* DEV */
-	f2 = new JFrame("Menu");
+	/*f2 = new JFrame("Menu");
 	f2.add(new Menu(new ControleurMenu()));
 	f2.pack();
 	f2.setVisible(true);
+	*/
 	currentColor = Color.PINK;
 	
     }
@@ -135,23 +139,20 @@ public class Controleur
 	}
     }
 
-    private class ControleurMenu extends ListActionListener
+    private class ControleurMenu implements ActionListener
     {
 	public void actionPerformed(ActionEvent e)
 	{
+		JComboBox src;
 	    if (e.getActionCommand().equals("Rectangle"))
 		s = Motif.RECTANGLE;
 	    else if (e.getActionCommand().equals("Ellipse"))
 		s = Motif.ELLIPSE;
-	}
-
-	public void valueChanged(ListSelectionEvent e)
-	{
-	    int	index;
-
-	    index = (!Menu.COLORLIST[e.getFirstIndex()].equals(currentColor)) ? e.getFirstIndex() : e.getLastIndex();
-	    if (e.getValueIsAdjusting())
-		currentColor = Menu.COLORLIST[index];
+	    else if (e.getActionCommand().equals("comboBoxChanged")){
+	    	src=(JComboBox) e.getSource();
+	    	currentColor=Menu.COLORLIST[src.getSelectedIndex()];
+	    }
+	    d.requestFocus();
 	}
     }
     
