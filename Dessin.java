@@ -1,6 +1,7 @@
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,6 +13,7 @@ public class Dessin extends JPanel implements Observer {
     private int	width;
     private int height;
     private List<Motif> motifs;
+    private RenderingHints hints;
     
     public Dessin(KeyMouseListener c) {
 	this.width = 800;
@@ -22,6 +24,8 @@ public class Dessin extends JPanel implements Observer {
 	this.addMouseMotionListener(c);
 	this.setFocusable(true);
 	this.requestFocus();
+	this.hints = new RenderingHints(null);
+	this.hints.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	repaint();
     }
 
@@ -30,6 +34,7 @@ public class Dessin extends JPanel implements Observer {
 	super.paintComponent(g);
 	Graphics2D g2D = (Graphics2D)g;
 	
+	g2D.addRenderingHints(hints);
 	toutDessiner(g2D);
     }
     

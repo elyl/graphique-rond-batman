@@ -155,6 +155,8 @@ public class Controleur
 		s = Motif.RECTANGLE;
 	    else if (e.getActionCommand().equals("Ellipse"))
 		s = Motif.ELLIPSE;
+	    else if (e.getActionCommand().equals("Droite"))
+		s = Motif.LINE;
 	    else if (e.getActionCommand().equals("comboBoxChanged")){
 	    	src = (JComboBox) e.getSource();
 	    	currentColor = Menu.COLORLIST[src.getSelectedIndex()];
