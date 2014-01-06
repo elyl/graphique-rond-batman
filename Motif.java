@@ -43,16 +43,25 @@ public class Motif extends Observable {
 
     private void initShape()
     {
+	int	tmpX;
+	int	tmpY;
+	int	tmpW;
+	int	tmpH;
+	    
+	tmpX = (this.width < 0) ? this.width + this.x : this.x;
+	tmpW = (this.width < 0) ? this.width * -1 : this.width;
+	tmpY = (this.height < 0) ? this.y + height : this.y;
+	tmpH = (this.height < 0) ? this.height * -1 : this.height;
 	switch (shapeType)
 	    {
 	    case Motif.RECTANGLE:
-		this.s = new Rectangle(this.x, this.y, this.width, this.height);
+		this.s = new Rectangle(tmpX, tmpY, tmpW, tmpH);
 		break;
 	    case Motif.ELLIPSE:
-		this.s = new Ellipse2D.Double(this.x, this.y, this.width, this.height);
+		this.s = new Ellipse2D.Double(tmpX, tmpY, tmpW, tmpH);
 		break;
 	    case Motif.LINE:
-		this.s = new Line2D.Double(this.x, this.y, this.x + this.width, this.y + this.height);
+		this.s = new Line2D.Double(tmpX, tmpY, tmpX + tmpW, tmpY + tmpH);
 	    }
     }
 

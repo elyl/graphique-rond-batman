@@ -39,7 +39,7 @@ public class Controleur
 	f.setPreferredSize(new Dimension(800, 600));
 	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	f.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
-	d.ajouterMotif(new Motif(50, 50, Color.GREEN));
+	d.ajouterMotif(new Motif(50, 50, -50, -50, Color.GREEN));
 	d.ajouterMotif(new Motif(200, 200, Color.PINK));
 	f.add(d);
 	f.pack();
@@ -169,11 +169,14 @@ public class Controleur
     {
 	public void keyTyped(KeyEvent e)
 	{
+	    Color c;
+
 	    logger.info(e.toString());
 	    if (e.getKeyChar() == 10)
 		{
-		    m.setColor(new Color(Integer.parseInt(prop.getfColor().substring(1), 16)));
+		    c = new Color(Integer.parseInt(prop.getfColor().substring(1), 16));
 		    m.resizeAndMove(Integer.parseInt(prop.getfX()), Integer.parseInt(prop.getfY()), Integer.parseInt(prop.getfWidth()), Integer.parseInt(prop.getfHeight()));
+		    m.setColor(c);
 		}
 	}
     }

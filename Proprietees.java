@@ -16,7 +16,7 @@ public class Proprietees extends JPanel implements Observer
 
     public Proprietees(KeyListener c)
     {
-	setLayout(new GridLayout(7, 2));
+	setLayout(new GridLayout(6, 2));
 	add(new JLabel("Type"));
 	lbl = new JLabel("Rectangle");
 	add(lbl);
