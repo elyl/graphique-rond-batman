@@ -56,14 +56,15 @@ public class Motif extends Observable {
 	tmpH = (this.height < 0) ? this.height * -1 : this.height;
 	switch (shapeType)
 	    {
-	    case Motif.RECTANGLE:
-		this.s = new Rectangle(tmpX, tmpY, tmpW, tmpH);
-		break;
 	    case Motif.ELLIPSE:
 		this.s = new Ellipse2D.Double(tmpX, tmpY, tmpW, tmpH);
 		break;
 	    case Motif.LINE:
 		this.s = new Line2D.Double(this.x, this.y, this.x + this.width, this.y + this.height);
+	    case Motif.RECTANGLE:
+	    default:
+		this.s = new Rectangle(tmpX, tmpY, tmpW, tmpH);
+		break;
 	    }
     }
 
@@ -159,6 +160,11 @@ public class Motif extends Observable {
     public Color getBorderColor()
     {
 	return this.borderColor;
+    }
+
+    public int getShapeType()
+    {
+	return this.shapeType;
     }
 
     public void setColor(Color color)
