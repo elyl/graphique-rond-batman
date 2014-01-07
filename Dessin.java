@@ -15,9 +15,9 @@ public class Dessin extends JPanel implements Observer {
     private List<Motif> motifs;
     private RenderingHints hints;
     
-    public Dessin(KeyMouseListener c) {
-	this.width = 800;
-	this.height = 600;
+    public Dessin(KeyMouseListener c, int width, int height) {
+	this.width = width;
+	this.height = height;
 	this.motifs = new ArrayList<Motif>();
 	this.addMouseListener(c);
 	this.addKeyListener(c);
