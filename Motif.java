@@ -61,7 +61,7 @@ public class Motif extends Observable {
 		this.s = new Ellipse2D.Double(tmpX, tmpY, tmpW, tmpH);
 		break;
 	    case Motif.LINE:
-		this.s = new Line2D.Double(tmpX, tmpY, tmpX + tmpW, tmpY + tmpH);
+		this.s = new Line2D.Double(this.x, this.y, this.x + this.width, this.y + this.height);
 	    }
     }
 
