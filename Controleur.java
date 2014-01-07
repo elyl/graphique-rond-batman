@@ -37,7 +37,7 @@ public class Controleur
 	    { e.printStackTrace(); }
 
 	f = new JFrame("Dessin vectoriel");
-	d = new Dessin(new ControleurDessin());
+	d = new Dessin(new ControleurDessin(), (int)screenSize.getWidth(), (int)screenSize.getHeight());
 	f.setPreferredSize(new Dimension((int)screenSize.getWidth(), (int)screenSize.getHeight()));
 	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	f.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
