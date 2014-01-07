@@ -165,6 +165,10 @@ public class Controleur
 		s = Motif.ELLIPSE;
 	    else if (e.getActionCommand().equals("Droite"))
 		s = Motif.LINE;
+	    else if (e.getActionCommand().equals("Sauvegarder"))
+		Sauvegarde.export("save", d.getMotifs());
+	    else if (e.getActionCommand().equals("Importer"))
+		Sauvegarde.importMotif("save", d);
 	    /*else if (e.getActionCommand().equals("comboBoxChanged")){
 	    	src = (JComboBox) e.getSource();
 	    	currentColor = Menu.COLORLIST[src.getSelectedIndex()];

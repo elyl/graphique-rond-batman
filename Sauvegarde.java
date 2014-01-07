@@ -14,11 +14,11 @@ public class Sauvegarde
 	String		line;
 	Iterator<Motif>	itr;
 	Motif		current;
-	PrintWriter	writer;
+	BufferedWriter	writer;
 
 	try
 	    {
-		writer = new PrintWriter(new BufferedWriter(new FileWriter(file)));
+		writer = new BufferedWriter(new FileWriter(file));
 		itr = motifs.iterator();
 		while (itr.hasNext())
 		    {
@@ -29,11 +29,15 @@ public class Sauvegarde
 			    current.getWidth() + ":" +
 			    current.getHeight() + ":" +
 			    current.getColor().getRGB();
-			writer.println(line);
+			writer.write(line, 0, line.length());
+			writer.newLine();
 		    }
+		writer.close();
 	    }
 	catch (Exception e)
-	    {}	    
+	    {
+		e.printStackTrace();
+	    }	    
     }
 
     public static void importMotif(String file, Dessin d)
@@ -45,7 +49,6 @@ public class Sauvegarde
 	try
 	    {
 		r = new BufferedReader(new FileReader(file));
-		line = r.readLine();
 		while ((line = r.readLine()) != null && line.length() != 0)
 		    {
 			tab = line.split(":");
@@ -55,6 +58,8 @@ public class Sauvegarde
 
 	    }
 	catch (Exception e)
-	    {}
+	    {
+		e.printStackTrace();
+	    }
     }
 }
