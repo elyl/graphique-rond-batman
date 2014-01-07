@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.*;
 import java.util.logging.*;
 
@@ -15,13 +16,14 @@ public class Controleur
     private int			s;
     private Color		currentColor;
     private Motif		m;
-
+    private JColorChooser colorChooser; //Var pour la palette
     /* Variables temporaires le temps du dev*/
     private JFrame		f2;
     private Logger		logger;
 
     public Controleur()
     {
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	Handler	fh;
 	/* LOG */
 	try
@@ -36,9 +38,15 @@ public class Controleur
 
 	f = new JFrame("Dessin vectoriel");
 	d = new Dessin(new ControleurDessin());
-	f.setPreferredSize(new Dimension(800, 600));
+	f.setPreferredSize(new Dimension((int)screenSize.getWidth(), (int)screenSize.getHeight()));
 	f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	f.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
+	//colorChooser
+	colorChooser = new JColorChooser();
+	colorChooser.setPreviewPanel(new JPanel());
+	colorChooser.setPreferredSize(new Dimension(500, 150));
+	//
+	f.add(colorChooser, BorderLayout.SOUTH);
 	d.ajouterMotif(new Motif(50, 50, -50, -50, Color.GREEN));
 	d.ajouterMotif(new Motif(200, 200, Color.PINK));
 	f.add(d);
@@ -52,7 +60,7 @@ public class Controleur
 	f2.add(prop);
 	f2.pack();
 	f2.setVisible(true);
-	currentColor = Color.PINK;
+	currentColor = Color.WHITE;
 	
     }
 
@@ -150,17 +158,18 @@ public class Controleur
 	public void actionPerformed(ActionEvent e)
 	{
 	    JComboBox src;
-	    
+	    currentColor=colorChooser.getColor();
 	    if (e.getActionCommand().equals("Rectangle"))
 		s = Motif.RECTANGLE;
 	    else if (e.getActionCommand().equals("Ellipse"))
 		s = Motif.ELLIPSE;
 	    else if (e.getActionCommand().equals("Droite"))
 		s = Motif.LINE;
-	    else if (e.getActionCommand().equals("comboBoxChanged")){
+	    /*else if (e.getActionCommand().equals("comboBoxChanged")){
 	    	src = (JComboBox) e.getSource();
 	    	currentColor = Menu.COLORLIST[src.getSelectedIndex()];
-	    }
+	    	
+	    }*/
 	    d.requestFocus();
 	}
     }
