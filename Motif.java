@@ -10,6 +10,8 @@ public class Motif extends Observable {
     public static final int	ELLIPSE = 2;
     public static final int	LINE = 3;
 
+    public static final int	MOVE_DISTANCE = 10;
+
     private Color	color, borderColor;
     private Shape	s;
     private boolean	selected;
@@ -178,6 +180,26 @@ public class Motif extends Observable {
 	initShape();
 	setChanged();
 	notifyObservers();
+    }
+
+    public void moveLeft()
+    {
+	this.x -= Motif.MOVE_DISTANCE;
+    }
+
+    public void moveRight()
+    {
+	this.x += Motif.MOVE_DISTANCE;
+    }
+
+    public void moveUp()
+    {
+	this.y -= Motif.MOVE_DISTANCE;
+    }
+
+    public void moveDown()
+    {
+	this.y += Motif.MOVE_DISTANCE;
     }
 
     public String toString()

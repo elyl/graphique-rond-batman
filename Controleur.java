@@ -174,7 +174,7 @@ public class Controleur
 	    logger.info(e.toString());
 	    if (e.getKeyChar() == 10)
 		{
-		    c = new Color(Integer.parseInt(prop.getfColor().substring(1), 16));
+		    c = new Color(Integer.parseInt(prop.getfColor().replace("#", ""), 16));
 		    m.resizeAndMove(Integer.parseInt(prop.getfX()), Integer.parseInt(prop.getfY()), Integer.parseInt(prop.getfWidth()), Integer.parseInt(prop.getfHeight()));
 		    m.setColor(c);
 		}
