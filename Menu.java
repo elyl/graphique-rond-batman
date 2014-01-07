@@ -14,7 +14,6 @@ public class Menu extends JPanel
     public Menu(ActionListener e)
     {
 	JButton		tmp;
-	JComboBox	box;
 
 	setPreferredSize(new Dimension(150, 50));
 	setLayout(new GridLayout(1, 4));
@@ -30,20 +29,6 @@ public class Menu extends JPanel
 	tmp = new JButton("Polygone");
 	tmp.addActionListener(e);
 	add(tmp);
-	box = new JComboBox(generateStringColorList());
-	box.addActionListener(e);
-	add(box);
-    }
 
-    public Vector<String> generateStringColorList()
-    {
-	Vector<String>	list;
-	Iterator<Color>	itr;
-
-	list = new Vector<String>();
-	itr = Arrays.asList(COLORLIST).iterator();
-	while (itr.hasNext())
-	    list.add(itr.next().toString());
-	return (list);
-    }
+	}
 }
