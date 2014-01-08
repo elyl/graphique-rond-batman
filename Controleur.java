@@ -44,7 +44,7 @@ public class Controleur
 	//colorChooser
 	colorChooser = new JColorChooser();
 	colorChooser.setPreviewPanel(new JPanel());
-	colorChooser.setPreferredSize(new Dimension(500, 150));
+	colorChooser.setPreferredSize(new Dimension(500, 300));
 	//
 	f.add(colorChooser, BorderLayout.SOUTH);
 	d.ajouterMotif(new Motif(50, 50, -50, -50, Color.GREEN));

@@ -52,7 +52,7 @@ public class Sauvegarde
 		while ((line = r.readLine()) != null && line.length() != 0)
 		    {
 			tab = line.split(":");
-			d.ajouterMotif(new Motif(Integer.parseInt(tab[1]), Integer.parseInt(tab[2]), Integer.parseInt(tab[3]), Integer.parseInt(tab[4]), new Color(Integer.parseInt(tab[5])), Integer.parseInt(tab[0])));
+			d.ajouterMotif(new Motif(Integer.parseInt(tab[1]), Integer.parseInt(tab[2]), Integer.parseInt(tab[3]), Integer.parseInt(tab[4]), new Color(Integer.parseInt(tab[5]), true), Integer.parseInt(tab[0])));
 		    }
 		r.close();
 
