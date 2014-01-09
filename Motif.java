@@ -58,6 +58,7 @@ public class Motif extends Observable {
 		case Motif.LINE:
 			this.s = new Line2D.Double(this.x, this.y, this.x + this.width,
 					this.y + this.height);
+			break;
 		case Motif.RECTANGLE:
 		default:
 			this.s = new Rectangle(tmpX, tmpY, tmpW, tmpH);
@@ -70,7 +71,7 @@ public class Motif extends Observable {
 	}
 
 	public void setSelected(boolean selected) {
-		if (selected == true)
+	    if (selected == true)
 			this.borderColor = Color.BLACK;
 		else
 			this.borderColor = this.color;
