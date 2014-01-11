@@ -2,9 +2,8 @@ import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
+import javax.swing.DefaultListModel;
+import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -13,13 +12,14 @@ import javax.swing.*;
 public class Dessin extends JPanel implements Observer {
 	private int width;
 	private int height;
-	private List<Motif> motifs;
+	private DefaultListModel motifs;
 	private RenderingHints hints;
 
 	public Dessin(KeyMouseListener c, int width, int height) {
+	    super();
 		this.width = width;
 		this.height = height;
-		this.motifs = new ArrayList<Motif>();
+		this.motifs = new DefaultListModel();
 		this.addMouseListener(c);
 		this.addKeyListener(c);
 		this.addMouseMotionListener(c);
@@ -44,7 +44,7 @@ public class Dessin extends JPanel implements Observer {
 	}
 
 	public void ajouterMotif(Motif motifSelectionne) {
-		motifs.add(motifSelectionne);
+		motifs.addElement(motifSelectionne);
 		motifSelectionne.addObserver(this);
 		repaint();
 	}
@@ -64,7 +64,7 @@ public class Dessin extends JPanel implements Observer {
 		return height;
 	}
 
-	public List<Motif> getMotifs() {
+	public DefaultListModel getMotifs() {
 		return motifs;
 	}
 
@@ -76,12 +76,8 @@ public class Dessin extends JPanel implements Observer {
 		this.height = h;
 	}
 
-	public void setMotifs(List<Motif> motifs) {
-		this.motifs = motifs;
-	}
-
 	public void supprimerMotif(Motif motif) {
-		motifs.remove(motif);
+		motifs.removeElement(motif);
 		repaint();
 	}
 
@@ -91,12 +87,12 @@ public class Dessin extends JPanel implements Observer {
 	}
 
 	public Motif getShape(Point p) {
-		Iterator<Motif> itr;
+		Enumeration itr;
 		Motif tmp;
 
-		itr = motifs.iterator();
-		while (itr.hasNext()) {
-			tmp = itr.next();
+		itr = motifs.elements();
+		while (itr.hasMoreElements()) {
+		    tmp = (Motif)itr.nextElement();
 			if (tmp.getShape().contains(p))
 				return (tmp);
 		}
@@ -108,10 +104,10 @@ public class Dessin extends JPanel implements Observer {
 	}
 
 	public void toutDessiner(Graphics2D g) {
-		Iterator<Motif> itr;
+		Enumeration itr;
 
-		itr = motifs.iterator();
-		while (itr.hasNext())
-			dessiner(g, itr.next());
+		itr = motifs.elements();
+		while (itr.hasMoreElements())
+		    dessiner(g, (Motif)itr.nextElement());
 	}
 }

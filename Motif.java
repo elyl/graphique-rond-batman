@@ -14,15 +14,18 @@ public class Motif extends Observable {
     public static final int POLYGON = 4;
     
     public static final int MOVE_DISTANCE = 10;
+
+    protected static int numero = 0;
     
-    protected Color color, borderColor;
-    protected Shape s;
-    protected boolean selected;
-    protected int x;
-    protected int y;
-    protected int width;
-    protected int height;
-    protected int shapeType;
+    protected Color	color, borderColor;
+    protected Shape	s;
+    protected boolean	selected;
+    protected int	x;
+    protected int	y;
+    protected int	width;
+    protected int	height;
+    protected int	shapeType;
+    protected String	name;
     
     public Motif(Color c)
     {
@@ -45,6 +48,7 @@ public class Motif extends Observable {
 	this.color = color;
 	this.borderColor = color;
 	this.shapeType = shape;
+	this.name = "Figure #" + numero++;
 	initShape();
     }
     
@@ -165,6 +169,16 @@ public class Motif extends Observable {
 	setChanged();
 	notifyObservers();
     }
+
+    public void setName(String name)
+    {
+	this.name = name;
+    }
+
+    public String getName()
+    {
+	return (this.name);
+    }
     
     public void updateShape() {
 	initShape();
@@ -189,6 +203,6 @@ public class Motif extends Observable {
     }
     
     public String toString() {
-	return (color.toString() + " " + s.toString());
+	return (name);
     }
 }

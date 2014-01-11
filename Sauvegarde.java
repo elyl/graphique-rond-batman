@@ -1,5 +1,5 @@
-import java.util.List;
-import java.util.Iterator;
+import javax.swing.DefaultListModel;
+import java.util.Enumeration;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.FileReader;
@@ -7,17 +7,17 @@ import java.io.BufferedReader;
 import java.awt.Color;
 
 public class Sauvegarde {
-	public static void export(String file, List<Motif> motifs) {
+	public static void export(String file, DefaultListModel motifs) {
 		String line;
-		Iterator<Motif> itr;
+		Enumeration itr;
 		Motif current;
 		BufferedWriter writer;
 
 		try {
 			writer = new BufferedWriter(new FileWriter(file));
-			itr = motifs.iterator();
-			while (itr.hasNext()) {
-				current = itr.next();
+			itr = motifs.elements();
+			while (itr.hasMoreElements()) {
+			    current = (Motif)itr.nextElement();
 				line = current.getShapeType() + ":" + current.getX() + ":"
 						+ current.getY() + ":" + current.getWidth() + ":"
 						+ current.getHeight() + ":"

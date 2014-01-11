@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
@@ -10,13 +11,14 @@ import java.util.logging.*;
 public class Controleur {
 	private Dessin d;
 	private Proprietees prop;
-	private JFrame f;
+    private JFrame f, f3;
 	private int s;
 	private Color currentColor;
 	private Motif m;
 	private JColorChooser colorChooser; // Var pour la palette
 	/* Variables temporaires le temps du dev */
 	private JFrame f2;
+    private	JList	jlist;
 	private Logger logger;
 
 	public Controleur() {
@@ -58,6 +60,13 @@ public class Controleur {
 		f2.add(prop);
 		f2.pack();
 		f2.setVisible(true);
+		jlist = new JList(d.getMotifs());
+		jlist.addListSelectionListener(new ControleurList());
+		f3 = new JFrame("liste");
+		f3.setPreferredSize(new Dimension(400, 200));
+		f3.add(jlist);
+		f3.pack();
+		f3.setVisible(true);
 		currentColor = Color.WHITE;
 
 	}
@@ -148,7 +157,7 @@ public class Controleur {
 			else if (e.getActionCommand().equals("Sauvegarder"))
 				Sauvegarde.export("save", d.getMotifs());
 			else if (e.getActionCommand().equals("Importer"))
-				Sauvegarde.importMotif("save", d);
+			Sauvegarde.importMotif("save", d);
 			d.requestFocus();
 		}
 	}
@@ -169,6 +178,21 @@ public class Controleur {
 			}
 		}
 	}
+    
+    private class ControleurList implements ListSelectionListener
+    {
+	public void valueChanged(ListSelectionEvent e)
+	{
+	    Motif	tmp;
+
+	    if (!e.getValueIsAdjusting())
+		{
+		    tmp = (Motif)d.getMotifs().get(jlist.getSelectedIndex());
+		    tmp.setSelected(true);
+		    prop.updateData(tmp);
+		}
+	}
+    }
 
 	public static void main(String args[]) {
 		new Controleur();
