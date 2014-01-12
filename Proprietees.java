@@ -11,14 +11,11 @@ public class Proprietees extends JPanel implements Observer {
 	private JTextField f_Y;
 	private JTextField f_Width;
 	private JTextField f_Height;
-	private JLabel lbl;
 	private Motif motif;
 
 	public Proprietees(KeyListener c) {
-		setLayout(new GridLayout(6, 2));
-		add(new JLabel("Type"));
-		lbl = new JLabel("Rectangle");
-		add(lbl);
+		setLayout(new GridLayout(5, 2));
+		this.setPreferredSize(new Dimension(100, 200));
 		add(new JLabel("Color"));
 		f_Color = new JTextField();
 		f_Color.addKeyListener(c);
