@@ -12,14 +12,14 @@ public class Controleur {
 	private Dessin d;
 	private Proprietees prop;
     private JFrame f, f3;
-	private int s;
-	private Color currentColor;
-	private Motif m;
-	private JColorChooser colorChooser; // Var pour la palette
-	/* Variables temporaires le temps du dev */
-	private JFrame f2;
-    private	JList	jlist;
-	private Logger logger;
+    private int s;
+    private Color currentColor;
+    private Motif m;
+    private JColorChooser colorChooser; // Var pour la palette
+    /* Variables temporaires le temps du dev */
+    private JFrame f2;
+    private ListMotifs	jlist;
+    private Logger logger;
 
 	public Controleur() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -60,8 +60,7 @@ public class Controleur {
 		f2.add(prop);
 		f2.pack();
 		f2.setVisible(true);
-		jlist = new JList(d.getMotifs());
-		jlist.addListSelectionListener(new ControleurList());
+		jlist = new ListMotifs(new ControleurList(), d.getMotifs());
 		f3 = new JFrame("liste");
 		f3.setPreferredSize(new Dimension(400, 200));
 		f3.add(jlist);
@@ -179,7 +178,7 @@ public class Controleur {
 		}
 	}
     
-    private class ControleurList implements ListSelectionListener
+    private class ControleurList extends ListActionListener
     {
 	public void valueChanged(ListSelectionEvent e)
 	{
@@ -189,7 +188,27 @@ public class Controleur {
 		{
 		    tmp = (Motif)d.getMotifs().get(jlist.getSelectedIndex());
 		    tmp.setSelected(true);
+		    m = tmp;
 		    prop.updateData(tmp);
+		}
+	}
+
+	public void actionPerformed(ActionEvent e)
+	{
+	    int		index;
+	    Motif	tmp;
+
+	    index = jlist.getSelectedIndex();
+	    m = (Motif)d.getMotifs().get(index);
+	    if (e.getActionCommand().equals("+") && index > 0)
+		{
+		    tmp = (Motif)d.getMotifs().set(index - 1, m);
+		    d.getMotifs().set(index, tmp);
+		}
+	    else if (e.getActionCommand().equals("-") && index < jlist.getListSize())
+		{
+		    tmp = (Motif)d.getMotifs().set(index + 1, m);
+		    d.getMotifs().set(index, tmp);
 		}
 	}
     }

@@ -26,4 +26,10 @@ public class Polygone extends Motif
 	setChanged();
 	notifyObservers();
     }
+
+    public void setX()
+    {}
+
+    public void setY()
+    {}
 }
