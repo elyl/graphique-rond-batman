@@ -23,6 +23,7 @@ public class Dessin extends JPanel implements Observer {
 		this.addMouseListener(c);
 		this.addKeyListener(c);
 		this.addMouseMotionListener(c);
+		this.addMouseWheelListener(c);
 		this.setFocusable(true);
 		this.requestFocus();
 		this.hints = new RenderingHints(null);

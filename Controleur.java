@@ -1,13 +1,24 @@
-import javax.swing.*;
-import javax.swing.event.*;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.*;
-import java.util.logging.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+
+import javax.swing.JColorChooser;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
 
 public class Controleur {
 	private Dessin draw;
@@ -22,6 +33,9 @@ public class Controleur {
     private ListMotifs	jlist;
     private Logger logger;
 
+    /**
+     * Création d'une nouvelle instance de la classe Contrôleur.
+     */
 	public Controleur() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		Handler fh;
@@ -42,11 +56,11 @@ public class Controleur {
 				(int) screenSize.getHeight()));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
-		// colorChooser
+		
 		colorChooser = new JColorChooser();
 		colorChooser.setPreviewPanel(new JPanel());
 		colorChooser.setPreferredSize(new Dimension(600, 200));
-		//
+		
 		jlist = new ListMotifs(new ControleurList(), draw.getMotifs());
 		prop = new Proprietees(new ControleurProprietees());
 		frame.add(prop, BorderLayout.EAST);
@@ -83,6 +97,9 @@ public class Controleur {
 		private int x;
 		private int y;
 
+		/**
+		 * Action réalisée lors de l'évènement "clic de la souris".
+		 */
 		public void mouseClicked(MouseEvent e) {
 			draw.requestFocus();
 			selectItem(new Point(e.getX(), e.getY()));
@@ -157,9 +174,16 @@ public class Controleur {
 			logger.info("Clavier: " + e.getKeyCode());
 		}
 
-		@Override
 		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
+		}
+		
+		public void mouseWheelMoved(MouseWheelEvent e) {
+			int n = e.getWheelRotation();
+			
+			if(n > 0)
+				motive.scaleDown();
+			else
+				motive.scaleUp();
 		}
 	}
 
