@@ -159,9 +159,9 @@ public class Controleur {
 				s = Motif.RECTANGLE;
 			else if (e.getActionCommand().equals("Ellipse"))
 				s = Motif.ELLIPSE;
-			else if (e.getActionCommand().equals("Droite"))
+			else if (e.getActionCommand().equals("Ligne"))
 				s = Motif.LINE;
-			else if (e.getActionCommand().equals("Sauvegarder"))
+			else if (e.getActionCommand().equals("Exporter"))
 				Sauvegarde.export("save", d.getMotifs());
 			else if (e.getActionCommand().equals("Importer"))
 			Sauvegarde.importMotif("save", d);
