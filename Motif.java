@@ -187,19 +187,19 @@ public class Motif extends Observable {
     }
     
     public void moveLeft() {
-	this.x -= Motif.MOVE_DISTANCE;
+	this.setX(this.x - Motif.MOVE_DISTANCE);
     }
     
     public void moveRight() {
-	this.x += Motif.MOVE_DISTANCE;
+	this.setX(this.x + Motif.MOVE_DISTANCE);
     }
     
     public void moveUp() {
-	this.y -= Motif.MOVE_DISTANCE;
+	this.setY(this.y - Motif.MOVE_DISTANCE);
     }
     
     public void moveDown() {
-	this.y += Motif.MOVE_DISTANCE;
+	this.setY(this.y + Motif.MOVE_DISTANCE);
     }
     
     public String toString() {

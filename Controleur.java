@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.event.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Point;
@@ -9,12 +10,12 @@ import java.awt.event.*;
 import java.util.logging.*;
 
 public class Controleur {
-	private Dessin d;
+	private Dessin draw;
 	private Proprietees prop;
-    private JFrame f;
-    private int s;
+    private JFrame frame;
+    private int curentShapeType;
     private Color currentColor;
-    private Motif m;
+    private Motif motive;
     private JPanel paneSud;
     private JColorChooser colorChooser;
     /* Variables temporaires le temps du dev */
@@ -34,31 +35,31 @@ public class Controleur {
 			e.printStackTrace();
 		}
 
-		f = new JFrame("Dessin vectoriel");
-		d = new Dessin(new ControleurDessin(), (int) screenSize.getWidth(),
+		frame = new JFrame("Dessin vectoriel");
+		draw = new Dessin(new ControleurDessin(), (int) screenSize.getWidth(),
 				(int) screenSize.getHeight());
-		f.setPreferredSize(new Dimension((int) screenSize.getWidth(),
+		frame.setPreferredSize(new Dimension((int) screenSize.getWidth(),
 				(int) screenSize.getHeight()));
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
 		// colorChooser
 		colorChooser = new JColorChooser();
 		colorChooser.setPreviewPanel(new JPanel());
 		colorChooser.setPreferredSize(new Dimension(600, 200));
 		//
-		jlist = new ListMotifs(new ControleurList(), d.getMotifs());
+		jlist = new ListMotifs(new ControleurList(), draw.getMotifs());
 		prop = new Proprietees(new ControleurProprietees());
-		f.add(prop, BorderLayout.EAST);
+		frame.add(prop, BorderLayout.EAST);
 		paneSud = new JPanel();
 		paneSud.add(colorChooser, BorderLayout.WEST);
 		paneSud.add(jlist, BorderLayout.EAST);
 		paneSud.setPreferredSize(new Dimension((int)screenSize.getWidth(), 200));
-		f.add(paneSud, BorderLayout.SOUTH);
+		frame.add(paneSud, BorderLayout.SOUTH);
 		//f.add(jlist, BorderLayout.EAST);
 		///f.add(colorChooser, BorderLayout.SOUTH);
-		f.add(d);
-		f.pack();
-		f.setVisible(true);
+		frame.add(draw);
+		frame.pack();
+		frame.setVisible(true);
 
 		/* DEV 
 		prop = new Proprietees(new ControleurProprietees());
@@ -83,7 +84,7 @@ public class Controleur {
 		private int y;
 
 		public void mouseClicked(MouseEvent e) {
-			d.requestFocus();
+			draw.requestFocus();
 			selectItem(new Point(e.getX(), e.getY()));
 			logger.info("Clic: x=" + e.getX() + ", y=" + e.getY()); /* LOG */
 		}
@@ -91,64 +92,74 @@ public class Controleur {
 		public void selectItem(Point p) {
 			Motif tmp;
 
-			tmp = d.getShape(p);
+			tmp = draw.getShape(p);
 			if (tmp != null) {
 				tmp.setSelected(true);
 				prop.updateData(tmp);
 				logger.info(tmp.toString() + " selectione"); /* LOG */
 			} else
 				logger.info("Aucun objet selectione"); /* LOG */
-			if (m != null && m != tmp) {
-				m.setSelected(false);
-				logger.info(m.toString() + " deselectione"); /* LOG */
+			if (motive != null && motive != tmp) {
+				motive.setSelected(false);
+				logger.info(motive.toString() + " deselectione"); /* LOG */
 			}
-			m = tmp;
+			motive = tmp;
 		}
 
 		public void mousePressed(MouseEvent e) {
 			x = e.getX();
 			y = e.getY();
-			if (s != 0) {
-				if (m != null)
-					m.setSelected(false);
-				m = new Motif(x, y, 0, 0, currentColor, s);
-				m.setSelected(true);
-				d.ajouterMotif(m);
+			if (curentShapeType != 0) {
+				if (motive != null)
+					motive.setSelected(false);
+				motive = new Motif(x, y, 0, 0, currentColor, curentShapeType);
+				motive.setSelected(true);
+				draw.ajouterMotif(motive);
 				// selectItem(new Point(x, y));
-				prop.updateData(m);
-				logger.info("Creation et ajout de " + m); /* LOG */
+				prop.updateData(motive);
+				logger.info("Creation et ajout de " + motive); /* LOG */
 			} else
 				selectItem(new Point(x, y));
-			System.out.println(m);
+			System.out.println(motive);
 		}
 
 		public void mouseReleased(MouseEvent e) {
-			if (m != null && s == 0) {
-				m.setX(m.getX() + e.getX() - x);
-				m.setY(m.getY() + e.getY() - y);
+			if (motive != null && curentShapeType == 0) {
+				motive.setX(motive.getX() + e.getX() - x);
+				motive.setY(motive.getY() + e.getY() - y);
 			}
-			s = Motif.NULL;
+			curentShapeType = Motif.NULL;
 		}
 
 		public void mouseDragged(MouseEvent e) {
-			if (m != null && s == Motif.NULL) {
-				m.setX(m.getX() + e.getX() - x);
-				m.setY(m.getY() + e.getY() - y);
+			if (motive != null && curentShapeType == Motif.NULL) {
+				motive.setX(motive.getX() + e.getX() - x);
+				motive.setY(motive.getY() + e.getY() - y);
 				x = e.getX();
 				y = e.getY();
-				logger.info("Deplacement de " + m + " aux coordonees " + x
+				logger.info("Deplacement de " + motive + " aux coordonees " + x
 						+ " + y"); /* LOG */
-			} else if (m != null) {
-				m.resize(e.getX() - x, e.getY() - y);
-				logger.info("Redimensionement: " + m);
+			} else if (motive != null) {
+				motive.resize(e.getX() - x, e.getY() - y);
+				logger.info("Redimensionement: " + motive);
 			}
 			logger.info("Deplacement souris: " + e.getX() + " " + e.getY()); /* LOG */
 		}
+		
+		public void keyPressed(KeyEvent e) {
+			switch(e.getKeyCode()) {
+				case KeyEvent.VK_LEFT: motive.moveLeft(); break;
+				case KeyEvent.VK_RIGHT: motive.moveRight(); break;
+				case KeyEvent.VK_UP: motive.moveUp(); break;
+				case KeyEvent.VK_DOWN: motive.moveDown(); break;
+				case KeyEvent.VK_DELETE: draw.supprimerMotif(motive); break;
+			}
+			logger.info("Clavier: " + e.getKeyCode());
+		}
 
+		@Override
 		public void keyTyped(KeyEvent e) {
-			if (e.getKeyChar() == 127)
-				d.supprimerMotif(m);
-			logger.info("Clavier: " + e.getKeyChar());
+			// TODO Auto-generated method stub
 		}
 	}
 
@@ -156,16 +167,16 @@ public class Controleur {
 		public void actionPerformed(ActionEvent e) {
 			currentColor = colorChooser.getColor();
 			if (e.getActionCommand().equals("Rectangle"))
-				s = Motif.RECTANGLE;
+				curentShapeType = Motif.RECTANGLE;
 			else if (e.getActionCommand().equals("Ellipse"))
-				s = Motif.ELLIPSE;
+				curentShapeType = Motif.ELLIPSE;
 			else if (e.getActionCommand().equals("Ligne"))
-				s = Motif.LINE;
+				curentShapeType = Motif.LINE;
 			else if (e.getActionCommand().equals("Exporter"))
-				Sauvegarde.export("save", d.getMotifs());
+				Sauvegarde.export("save", draw.getMotifs());
 			else if (e.getActionCommand().equals("Importer"))
-			Sauvegarde.importMotif("save", d);
-			d.requestFocus();
+			Sauvegarde.importMotif("save", draw);
+			draw.requestFocus();
 		}
 	}
 
@@ -177,11 +188,11 @@ public class Controleur {
 			if (e.getKeyChar() == 10) {
 				c = new Color(Integer.parseInt(prop.getfColor()
 						.replace("#", ""), 16));
-				m.resizeAndMove(Integer.parseInt(prop.getfX()),
+				motive.resizeAndMove(Integer.parseInt(prop.getfX()),
 						Integer.parseInt(prop.getfY()),
 						Integer.parseInt(prop.getfWidth()),
 						Integer.parseInt(prop.getfHeight()));
-				m.setColor(c);
+				motive.setColor(c);
 			}
 		}
 	}
@@ -194,9 +205,9 @@ public class Controleur {
 
 	    if (!e.getValueIsAdjusting())
 		{
-		    tmp = (Motif)d.getMotifs().get(jlist.getSelectedIndex());
+		    tmp = (Motif)draw.getMotifs().get(jlist.getSelectedIndex());
 		    tmp.setSelected(true);
-		    m = tmp;
+		    motive = tmp;
 		    prop.updateData(tmp);
 		}
 	}
@@ -207,16 +218,16 @@ public class Controleur {
 	    Motif	tmp;
 
 	    index = jlist.getSelectedIndex();
-	    m = (Motif)d.getMotifs().get(index);
+	    motive = (Motif)draw.getMotifs().get(index);
 	    if (e.getActionCommand().equals("+") && index > 0)
 		{
-		    tmp = (Motif)d.getMotifs().set(index - 1, m);
-		    d.getMotifs().set(index, tmp);
+		    tmp = (Motif)draw.getMotifs().set(index - 1, motive);
+		    draw.getMotifs().set(index, tmp);
 		}
 	    else if (e.getActionCommand().equals("-") && index < jlist.getListSize())
 		{
-		    tmp = (Motif)d.getMotifs().set(index + 1, m);
-		    d.getMotifs().set(index, tmp);
+		    tmp = (Motif)draw.getMotifs().set(index + 1, motive);
+		    draw.getMotifs().set(index, tmp);
 		}
 	}
     }
