@@ -203,6 +203,7 @@ public class Controleur {
 			else
 				motive.scaleUp();
 		}
+		
 	}
 
 	private class ControleurMenu implements ActionListener {

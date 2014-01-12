@@ -205,4 +205,15 @@ public class Motif extends Observable {
     public String toString() {
 	return (name);
     }
+
+	public void scaleDown() {
+		this.width--;
+		this.height--;
+	}
+
+	public void scaleUp() {
+		this.width++;
+		this.height++;
+		
+	}
 }
