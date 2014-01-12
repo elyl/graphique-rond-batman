@@ -6,7 +6,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.util.Observable;
 
-public class Motif extends Observable {
+public class Motif extends Observable implements Cloneable{
     public static final int NULL = 0;
     public static final int RECTANGLE = 1;
     public static final int ELLIPSE = 2;
@@ -216,4 +216,9 @@ public class Motif extends Observable {
 		this.height++;
 		
 	}
+
+    public Motif clone()
+    {
+	return (new Motif(this.x, this.y, this.width, this.height, this.color, this.shapeType));
+    }
 }

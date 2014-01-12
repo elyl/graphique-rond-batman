@@ -19,6 +19,7 @@ public class ListMotifs extends JPanel
 	setLayout(new GridLayout(1, 2));
 	jlist = new JList(motifs);
 	jlist.addListSelectionListener(c);
+	jlist.setVisibleRowCount(5);
 	add(jlist);
 	p = new JPanel();
 	p.setLayout(new GridLayout(2, 1));

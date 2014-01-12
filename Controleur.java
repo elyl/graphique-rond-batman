@@ -174,20 +174,17 @@ public class Controleur {
 				case KeyEvent.VK_DOWN: motive.moveDown(); break;
 				case KeyEvent.VK_DELETE: draw.supprimerMotif(motive); break;
 				case KeyEvent.VK_C :
-					if(e.isControlDown()){
-						motiveCopie=new Motif(motive.getX(), motive.getY(), motive.getWidth(), motive.getHeight(), motive.getColor(), motive.getShapeType());
-					} ; break;
+					if(e.isControlDown())
+					    motiveCopie = motive.clone();
+					break;
 				case KeyEvent.VK_V :
 					if(e.isControlDown()){
-						PointerInfo a = MouseInfo.getPointerInfo();
-						Point b = a.getLocation();
-						int xAlt = (int) b.getX();
-						int yAlt = (int) b.getY();
-						motiveCopie.setX(xAlt);
-						motiveCopie.setY(yAlt-75);
+						motiveCopie.setX((int)MouseInfo.getPointerInfo().getLocation().getX());
+						motiveCopie.setY((int)MouseInfo.getPointerInfo().getLocation().getY() - 75);
 						draw.ajouterMotif(motiveCopie);
-						motiveCopie=new Motif(motiveCopie.getX(), motiveCopie.getY(), motiveCopie.getWidth(), motiveCopie.getHeight(), motiveCopie.getColor(), motiveCopie.getShapeType());
-					} ; break;
+						motiveCopie = motiveCopie.clone();
+					} 
+					break;
 			}
 			logger.info("Clavier: " + e.getKeyCode());
 		}
