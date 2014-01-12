@@ -11,13 +11,13 @@ import java.util.logging.*;
 public class Controleur {
 	private Dessin d;
 	private Proprietees prop;
-    private JFrame f, f3;
+    private JFrame f;
     private int s;
     private Color currentColor;
     private Motif m;
-    private JColorChooser colorChooser; // Var pour la palette
+    private JPanel paneSud;
+    private JColorChooser colorChooser;
     /* Variables temporaires le temps du dev */
-    private JFrame f2;
     private ListMotifs	jlist;
     private Logger logger;
 
@@ -44,16 +44,23 @@ public class Controleur {
 		// colorChooser
 		colorChooser = new JColorChooser();
 		colorChooser.setPreviewPanel(new JPanel());
-		colorChooser.setPreferredSize(new Dimension(500, 300));
+		colorChooser.setPreferredSize(new Dimension(600, 200));
 		//
-		f.add(colorChooser, BorderLayout.SOUTH);
-		d.ajouterMotif(new Motif(50, 50, -50, -50, Color.GREEN));
-		d.ajouterMotif(new Motif(200, 200, Color.PINK));
+		jlist = new ListMotifs(new ControleurList(), d.getMotifs());
+		prop = new Proprietees(new ControleurProprietees());
+		f.add(prop, BorderLayout.EAST);
+		paneSud = new JPanel();
+		paneSud.add(colorChooser, BorderLayout.WEST);
+		paneSud.add(jlist, BorderLayout.EAST);
+		paneSud.setPreferredSize(new Dimension((int)screenSize.getWidth(), 200));
+		f.add(paneSud, BorderLayout.SOUTH);
+		//f.add(jlist, BorderLayout.EAST);
+		///f.add(colorChooser, BorderLayout.SOUTH);
 		f.add(d);
 		f.pack();
 		f.setVisible(true);
 
-		/* DEV */
+		/* DEV 
 		prop = new Proprietees(new ControleurProprietees());
 		f2 = new JFrame("Menu");
 		f2.setPreferredSize(new Dimension(400, 200));
@@ -66,6 +73,7 @@ public class Controleur {
 		f3.add(jlist);
 		f3.pack();
 		f3.setVisible(true);
+		*/
 		currentColor = Color.WHITE;
 
 	}
