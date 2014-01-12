@@ -1,7 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Dimension;
+import java.awt.PointerInfo;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,6 +29,7 @@ public class Controleur {
     private int curentShapeType;
     private Color currentColor;
     private Motif motive;
+    private Motif motiveCopie;
     private JPanel paneSud;
     private JColorChooser colorChooser;
     /* Variables temporaires le temps du dev */
@@ -170,6 +173,21 @@ public class Controleur {
 				case KeyEvent.VK_UP: motive.moveUp(); break;
 				case KeyEvent.VK_DOWN: motive.moveDown(); break;
 				case KeyEvent.VK_DELETE: draw.supprimerMotif(motive); break;
+				case KeyEvent.VK_C :
+					if(e.isControlDown()){
+						motiveCopie=new Motif(motive.getX(), motive.getY(), motive.getWidth(), motive.getHeight(), motive.getColor(), motive.getShapeType());
+					} ; break;
+				case KeyEvent.VK_V :
+					if(e.isControlDown()){
+						PointerInfo a = MouseInfo.getPointerInfo();
+						Point b = a.getLocation();
+						int xAlt = (int) b.getX();
+						int yAlt = (int) b.getY();
+						motiveCopie.setX(xAlt);
+						motiveCopie.setY(yAlt-75);
+						draw.ajouterMotif(motiveCopie);
+						motiveCopie=new Motif(motiveCopie.getX(), motiveCopie.getY(), motiveCopie.getWidth(), motiveCopie.getHeight(), motiveCopie.getColor(), motiveCopie.getShapeType());
+					} ; break;
 			}
 			logger.info("Clavier: " + e.getKeyCode());
 		}
