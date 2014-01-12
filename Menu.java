@@ -8,23 +8,15 @@ import java.awt.event.ActionListener;
 public class Menu extends JPanel {
 	public Menu(ActionListener e) {
 		JButton tmp;
+		String tab[] = {"Ligne", "Rectangle", "Ellipse", "Exporter", "Importer"};
 
 		setPreferredSize(new Dimension(150, 50));
 		setLayout(new GridLayout(1, 4));
-		tmp = new JButton("Rectangle");
-		tmp.addActionListener(e);
-		add(tmp);
-		tmp = new JButton("Droite");
-		tmp.addActionListener(e);
-		add(tmp);
-		tmp = new JButton("Ellipse");
-		tmp.addActionListener(e);
-		add(tmp);
-		tmp = new JButton("Sauvegarder");
-		tmp.addActionListener(e);
-		add(tmp);
-		tmp = new JButton("Importer");
-		tmp.addActionListener(e);
-		add(tmp);
+		
+		for(int i = 0; i < tab.length; i++) {
+			tmp = new JButton(tab[i]);
+			tmp.addActionListener(e);
+			add(tmp);
+		}
 	}
 }
