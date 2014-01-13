@@ -273,6 +273,7 @@ public class Controleur {
 		    tmp = (Motif)draw.getMotifs().set(index + 1, motive);
 		    draw.getMotifs().set(index, tmp);
 		}
+	    draw.repaint();
 	}
     }
 
