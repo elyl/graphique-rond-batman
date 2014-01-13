@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Dimension;
@@ -19,6 +21,7 @@ import java.util.logging.SimpleFormatter;
 
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 
@@ -37,7 +40,7 @@ public class Controleur {
     private Logger logger;
 
     /**
-     * Création d'une nouvelle instance de la classe Contrôleur.
+     * Création d'une nouvelle instance de la classe Controleur.
      */
 	public Controleur() {
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -52,59 +55,104 @@ public class Controleur {
 			e.printStackTrace();
 		}
 
-		frame = new JFrame("Dessin vectoriel");
-		draw = new Dessin(new ControleurDessin(), (int) screenSize.getWidth(),
-				(int) screenSize.getHeight());
-		frame.setPreferredSize(new Dimension((int) screenSize.getWidth(),
-				(int) screenSize.getHeight()));
+		frame = new JFrame("Graphicron 3000");
+		frame.setPreferredSize(new Dimension(950, 810));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
+		frame.setLayout(new GridBagLayout());
 		
-		colorChooser = new JColorChooser(Color.CYAN);
+		draw = new Dessin(new ControleurDessin(), 950, 500);
+		
+		// Définition de la palette de couleurs
+		colorChooser = new JColorChooser(Color.RED);
 		colorChooser.setPreviewPanel(new JPanel());
-		colorChooser.setPreferredSize(new Dimension(600, 200));
 		
+		// Définition de la liste des figures dans leur ordre de superposition
 		jlist = new ListMotifs(new ControleurList(), draw.getMotifs());
+		
+		// Défition des propriétés de la figure courante
 		prop = new Proprietees(new ControleurProprietees());
-		frame.add(prop, BorderLayout.EAST);
-		paneSud = new JPanel();
-		paneSud.add(colorChooser, BorderLayout.WEST);
-		paneSud.add(jlist, BorderLayout.EAST);
-		paneSud.setPreferredSize(new Dimension((int)screenSize.getWidth(), 200));
-		frame.add(paneSud, BorderLayout.SOUTH);
-		frame.add(draw);
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.CENTER;
+		
+		int i = 0;
+		 
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 3;
+        frame.add(new Menu(new ControleurMenu()), gbc);
+        
+        i++;
+        
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 3;
+        gbc.fill = GridBagConstraints.BOTH; 
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        frame.add(draw,  gbc);
+        
+        i++;
+        
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        frame.add(prop,  gbc);
+        
+        gbc.gridx = 1;
+        gbc.gridy = i;
+        gbc.ipadx = 10;
+        frame.add(jlist,  gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = i;
+        frame.add(colorChooser,  gbc);
+		
+		//frame.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
+		//frame.add(prop, BorderLayout.EAST);
+		//paneSud = new JPanel();
+		//paneSud.add(colorChooser, BorderLayout.WEST);
+		//paneSud.add(jlist, BorderLayout.EAST);
+		//frame.add(paneSud, BorderLayout.SOUTH);
+		//frame.add(draw);
 		frame.pack();
 		frame.setVisible(true);
 	}
 
+    public void selectItem(Point p) {
+	Motif tmp;
+	
+	tmp = draw.getShape(p);
+	if (tmp != null) {
+	    selectItem(tmp);
+	    logger.info(tmp.toString() + " selectione"); /* LOG */
+	} else
+	    logger.info("Aucun objet selectione"); /* LOG */
+    }
+
+    public void selectItem(Motif m)
+    {
+	if (motive != null)
+	    {
+		motive.setSelected(false);
+		logger.info(motive.toString() + " deselectione"); /* LOG */
+	    }
+	m.setSelected(true);
+	prop.updateData(m);
+	motive = m;
+    }
+    
 	private class ControleurDessin extends KeyMouseListener {
 		private int x;
 		private int y;
 
-		/**
-		 * Action réalisée lors de l'évènement "clic de la souris".
-		 */
 		public void mouseClicked(MouseEvent e) {
 			draw.requestFocus();
 			selectItem(new Point(e.getX(), e.getY()));
 			logger.info("Clic: x=" + e.getX() + ", y=" + e.getY()); /* LOG */
-		}
-
-		public void selectItem(Point p) {
-			Motif tmp;
-
-			tmp = draw.getShape(p);
-			if (tmp != null) {
-				tmp.setSelected(true);
-				prop.updateData(tmp);
-				logger.info(tmp.toString() + " selectione"); /* LOG */
-			} else
-				logger.info("Aucun objet selectione"); /* LOG */
-			if (motive != null && motive != tmp) {
-				motive.setSelected(false);
-				logger.info(motive.toString() + " deselectione"); /* LOG */
-			}
-			motive = tmp;
 		}
 
 		public void mousePressed(MouseEvent e) {
@@ -189,11 +237,11 @@ public class Controleur {
 			currentColor = colorChooser.getColor();
 			if (e.getActionCommand().equals("Rectangle"))
 				curentShapeType = Motif.RECTANGLE;
-			else if (e.getActionCommand().equals("Carre"))
+			else if (e.getActionCommand().equals("Carré"))
 			    curentShapeType = Motif.SQUARE;
 			else if (e.getActionCommand().equals("Ellipse"))
 				curentShapeType = Motif.ELLIPSE;
-			else if (e.getActionCommand().equals("Rond"))
+			else if (e.getActionCommand().equals("Cercle"))
 			    curentShapeType = Motif.CIRCLE;
 			else if (e.getActionCommand().equals("Ligne"))
 				curentShapeType = Motif.LINE;
@@ -231,9 +279,7 @@ public class Controleur {
 	    if (!e.getValueIsAdjusting())
 		{
 		    tmp = (Motif)draw.getMotifs().get(jlist.getSelectedIndex());
-		    tmp.setSelected(true);
-		    motive = tmp;
-		    prop.updateData(tmp);
+		    selectItem(tmp);
 		}
 	}
 
@@ -243,16 +289,17 @@ public class Controleur {
 	    Motif	tmp;
 
 	    index = jlist.getSelectedIndex();
-	    motive = (Motif)draw.getMotifs().get(index);
 	    if (e.getActionCommand().equals("+") && index > 0)
 		{
 		    tmp = (Motif)draw.getMotifs().set(index - 1, motive);
 		    draw.getMotifs().set(index, tmp);
+		    jlist.setSelectedIndex(index - 1);
 		}
-	    else if (e.getActionCommand().equals("-") && index < jlist.getListSize())
+	    else if (e.getActionCommand().equals("-") && index < jlist.getListSize() - 1)
 		{
 		    tmp = (Motif)draw.getMotifs().set(index + 1, motive);
 		    draw.getMotifs().set(index, tmp);
+		    jlist.setSelectedIndex(index + 1);
 		}
 	    draw.repaint();
 	}

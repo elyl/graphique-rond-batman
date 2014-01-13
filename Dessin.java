@@ -1,11 +1,15 @@
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.RenderingHints;
+
 import javax.swing.DefaultListModel;
+
 import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -17,6 +21,8 @@ public class Dessin extends JPanel implements Observer {
 
 	public Dessin(KeyMouseListener c, int width, int height) {
 	    super();
+	    this.setBackground(Color.WHITE);
+	    this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		this.width = width;
 		this.height = height;
 		this.motifs = new DefaultListModel();

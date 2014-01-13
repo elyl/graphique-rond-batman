@@ -1,5 +1,7 @@
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -8,10 +10,10 @@ import java.awt.event.ActionListener;
 public class Menu extends JPanel {
 	public Menu(ActionListener e) {
 		JButton tmp;
-		String tab[] = {"Ligne", "Rectangle", "Carre", "Ellipse", "Rond", "Exporter", "Importer"};
+		String tab[] = {"Importer", "Exporter", "<-", "->", "Ligne", "Carré", "Rectangle", "Cercle", "Ellipse"};
 
-		setPreferredSize(new Dimension(150, 50));
-		setLayout(new GridLayout(1, 4));
+		this.setLayout(new FlowLayout());
+		this.setSize(800, 100);
 		
 		for(int i = 0; i < tab.length; i++) {
 			tmp = new JButton(tab[i]);

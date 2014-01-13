@@ -14,28 +14,92 @@ public class Proprietees extends JPanel implements Observer {
 	private Motif motif;
 
 	public Proprietees(KeyListener c) {
-		setLayout(new GridLayout(5, 2));
-		this.setPreferredSize(new Dimension(100, 200));
-		add(new JLabel("Color"));
-		f_Color = new JTextField();
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.insets = new Insets(2,2,2,2);
+		gbc.anchor = GridBagConstraints.NORTHEAST;
+		
+		f_Color = new JTextField(8);
 		f_Color.addKeyListener(c);
-		add(f_Color);
-		add(new JLabel("X"));
 		f_X = new JTextField();
 		f_X.addKeyListener(c);
-		add(f_X);
-		add(new JLabel("Y"));
 		f_Y = new JTextField();
 		f_Y.addKeyListener(c);
-		add(f_Y);
-		add(new JLabel("Width"));
 		f_Width = new JTextField();
 		f_Width.addKeyListener(c);
-		add(f_Width);
-		add(new JLabel("Height"));
 		f_Height = new JTextField();
 		f_Height.addKeyListener(c);
-		add(f_Height);
+		
+		int i=0;
+		 
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        add(new JLabel("Couleur : "),  gbc);
+ 
+        gbc.gridx = 1;
+        gbc.gridy = i;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        add(f_Color,  gbc);        
+ 
+        i++;
+        
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        add(new JLabel("Coordonnée X : "),  gbc);
+ 
+        gbc.gridx = 1;
+        gbc.gridy = i;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        add(f_X,  gbc);        
+ 
+        i++;
+        
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        add(new JLabel("Coordonnée Y : "),  gbc);
+ 
+        gbc.gridx = 1;
+        gbc.gridy = i;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        add(f_Y,  gbc);        
+ 
+        i++;
+        
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        add(new JLabel("Hauteur : "),  gbc);
+ 
+        gbc.gridx = 1;
+        gbc.gridy = i;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        add(f_Height,  gbc);        
+ 
+        i++;
+        
+        gbc.gridx = 0;
+        gbc.gridy = i;
+        gbc.gridwidth = 1;
+        gbc.fill = GridBagConstraints.NONE;
+        add(new JLabel("Largeur : "),  gbc);
+ 
+        gbc.gridx = 1;
+        gbc.gridy = i;
+        gbc.gridwidth = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        add(f_Width,  gbc);        
 	}
 
 	public void updateData(Motif m) {
