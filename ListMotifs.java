@@ -41,4 +41,9 @@ public class ListMotifs extends JPanel
     {
 	return (jlist.getModel().getSize());
     }
+
+    public void setSelectedIndex(int index)
+    {
+	jlist.setSelectedIndex(index);
+    }
 }
