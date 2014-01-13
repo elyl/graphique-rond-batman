@@ -18,6 +18,8 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
@@ -65,6 +67,12 @@ public class Controleur {
 		// Définition de la palette de couleurs
 		colorChooser = new JColorChooser(Color.RED);
 		colorChooser.setPreviewPanel(new JPanel());
+		colorChooser.getSelectionModel().addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent e)
+			{
+			    currentColor = colorChooser.getColor();
+			}
+		    });
 		
 		// Définition de la liste des figures dans leur ordre de superposition
 		jlist = new ListMotifs(new ControleurList(), draw.getMotifs());
@@ -126,11 +134,7 @@ public class Controleur {
 	Motif tmp;
 	
 	tmp = draw.getShape(p);
-	if (tmp != null) {
-	    selectItem(tmp);
-	    logger.info(tmp.toString() + " selectione"); /* LOG */
-	} else
-	    logger.info("Aucun objet selectione"); /* LOG */
+	selectItem(tmp);
     }
 
     public void selectItem(Motif m)
@@ -140,8 +144,11 @@ public class Controleur {
 		motive.setSelected(false);
 		logger.info(motive.toString() + " deselectione"); /* LOG */
 	    }
-	m.setSelected(true);
-	prop.updateData(m);
+	if (m != null)
+	    {
+		m.setSelected(true);
+		prop.updateData(m);
+	    }
 	motive = m;
     }
     
@@ -234,7 +241,7 @@ public class Controleur {
 
 	private class ControleurMenu implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			currentColor = colorChooser.getColor();
+		    //currentColor = colorChooser.getColor();
 			if (e.getActionCommand().equals("Rectangle"))
 				curentShapeType = Motif.RECTANGLE;
 			else if (e.getActionCommand().equals("Carré"))
