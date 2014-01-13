@@ -208,8 +208,12 @@ public class Controleur {
 			currentColor = colorChooser.getColor();
 			if (e.getActionCommand().equals("Rectangle"))
 				curentShapeType = Motif.RECTANGLE;
+			else if (e.getActionCommand().equals("Carre"))
+			    curentShapeType = Motif.SQUARE;
 			else if (e.getActionCommand().equals("Ellipse"))
 				curentShapeType = Motif.ELLIPSE;
+			else if (e.getActionCommand().equals("Rond"))
+			    curentShapeType = Motif.CIRCLE;
 			else if (e.getActionCommand().equals("Ligne"))
 				curentShapeType = Motif.LINE;
 			else if (e.getActionCommand().equals("Exporter"))

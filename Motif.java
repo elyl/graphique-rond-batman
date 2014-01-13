@@ -12,6 +12,8 @@ public class Motif extends Observable implements Cloneable{
     public static final int ELLIPSE = 2;
     public static final int LINE = 3;
     public static final int POLYGON = 4;
+    public static final int SQUARE = 5;
+    public static final int CIRCLE = 6;
     
     public static final int MOVE_DISTANCE = 10;
 
@@ -58,11 +60,13 @@ public class Motif extends Observable implements Cloneable{
 	int tmpW;
 	int tmpH;
 	
+	this.height = (this.shapeType == Motif.SQUARE || this.shapeType == Motif.CIRCLE) ? this.width : this.height;
 	tmpX = (this.width < 0) ? this.width + this.x : this.x;
 	tmpW = (this.width < 0) ? this.width * -1 : this.width;
 	tmpY = (this.height < 0) ? this.y + height : this.y;
 	tmpH = (this.height < 0) ? this.height * -1 : this.height;
 	switch (shapeType) {
+	case Motif.CIRCLE:
 	case Motif.ELLIPSE:
 	    this.s = new Ellipse2D.Double(tmpX, tmpY, tmpW, tmpH);
 	    break;
@@ -73,6 +77,7 @@ public class Motif extends Observable implements Cloneable{
 	case Motif.POLYGON:
 	    this.s = new Polygon();
 	    break;
+	case Motif.SQUARE:
 	case Motif.RECTANGLE:
 	default:
 	    this.s = new Rectangle(tmpX, tmpY, tmpW, tmpH);

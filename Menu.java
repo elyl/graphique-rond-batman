@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class Menu extends JPanel {
 	public Menu(ActionListener e) {
 		JButton tmp;
-		String tab[] = {"Ligne", "Rectangle", "Ellipse", "Exporter", "Importer"};
+		String tab[] = {"Ligne", "Rectangle", "Carre", "Ellipse", "Rond", "Exporter", "Importer"};
 
 		setPreferredSize(new Dimension(150, 50));
 		setLayout(new GridLayout(1, 4));
