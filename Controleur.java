@@ -60,7 +60,7 @@ public class Controleur {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new Menu(new ControleurMenu()), BorderLayout.NORTH);
 		
-		colorChooser = new JColorChooser();
+		colorChooser = new JColorChooser(Color.CYAN);
 		colorChooser.setPreviewPanel(new JPanel());
 		colorChooser.setPreferredSize(new Dimension(600, 200));
 		
@@ -72,28 +72,9 @@ public class Controleur {
 		paneSud.add(jlist, BorderLayout.EAST);
 		paneSud.setPreferredSize(new Dimension((int)screenSize.getWidth(), 200));
 		frame.add(paneSud, BorderLayout.SOUTH);
-		//f.add(jlist, BorderLayout.EAST);
-		///f.add(colorChooser, BorderLayout.SOUTH);
 		frame.add(draw);
 		frame.pack();
 		frame.setVisible(true);
-
-		/* DEV 
-		prop = new Proprietees(new ControleurProprietees());
-		f2 = new JFrame("Menu");
-		f2.setPreferredSize(new Dimension(400, 200));
-		f2.add(prop);
-		f2.pack();
-		f2.setVisible(true);
-		jlist = new ListMotifs(new ControleurList(), d.getMotifs());
-		f3 = new JFrame("liste");
-		f3.setPreferredSize(new Dimension(400, 200));
-		f3.add(jlist);
-		f3.pack();
-		f3.setVisible(true);
-		*/
-		currentColor = Color.WHITE;
-
 	}
 
 	private class ControleurDessin extends KeyMouseListener {
