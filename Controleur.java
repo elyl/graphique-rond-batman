@@ -77,6 +77,29 @@ public class Controleur {
 		frame.setVisible(true);
 	}
 
+    public void selectItem(Point p) {
+	Motif tmp;
+	
+	tmp = draw.getShape(p);
+	if (tmp != null) {
+	    selectItem(tmp);
+	    logger.info(tmp.toString() + " selectione"); /* LOG */
+	} else
+	    logger.info("Aucun objet selectione"); /* LOG */
+    }
+
+    public void selectItem(Motif m)
+    {
+	if (motive != null)
+	    {
+		motive.setSelected(false);
+		logger.info(motive.toString() + " deselectione"); /* LOG */
+	    }
+	m.setSelected(true);
+	prop.updateData(m);
+	motive = m;
+    }
+    
 	private class ControleurDessin extends KeyMouseListener {
 		private int x;
 		private int y;
@@ -88,23 +111,6 @@ public class Controleur {
 			draw.requestFocus();
 			selectItem(new Point(e.getX(), e.getY()));
 			logger.info("Clic: x=" + e.getX() + ", y=" + e.getY()); /* LOG */
-		}
-
-		public void selectItem(Point p) {
-			Motif tmp;
-
-			tmp = draw.getShape(p);
-			if (tmp != null) {
-				tmp.setSelected(true);
-				prop.updateData(tmp);
-				logger.info(tmp.toString() + " selectione"); /* LOG */
-			} else
-				logger.info("Aucun objet selectione"); /* LOG */
-			if (motive != null && motive != tmp) {
-				motive.setSelected(false);
-				logger.info(motive.toString() + " deselectione"); /* LOG */
-			}
-			motive = tmp;
 		}
 
 		public void mousePressed(MouseEvent e) {
@@ -231,9 +237,7 @@ public class Controleur {
 	    if (!e.getValueIsAdjusting())
 		{
 		    tmp = (Motif)draw.getMotifs().get(jlist.getSelectedIndex());
-		    tmp.setSelected(true);
-		    motive = tmp;
-		    prop.updateData(tmp);
+		    selectItem(tmp);
 		}
 	}
 
@@ -243,16 +247,17 @@ public class Controleur {
 	    Motif	tmp;
 
 	    index = jlist.getSelectedIndex();
-	    motive = (Motif)draw.getMotifs().get(index);
 	    if (e.getActionCommand().equals("+") && index > 0)
 		{
 		    tmp = (Motif)draw.getMotifs().set(index - 1, motive);
 		    draw.getMotifs().set(index, tmp);
+		    jlist.setSelectedIndex(index - 1);
 		}
-	    else if (e.getActionCommand().equals("-") && index < jlist.getListSize())
+	    else if (e.getActionCommand().equals("-") && index < jlist.getListSize() - 1)
 		{
 		    tmp = (Motif)draw.getMotifs().set(index + 1, motive);
 		    draw.getMotifs().set(index, tmp);
+		    jlist.setSelectedIndex(index + 1);
 		}
 	    draw.repaint();
 	}
