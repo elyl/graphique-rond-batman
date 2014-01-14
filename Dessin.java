@@ -18,6 +18,13 @@ public class Dessin extends JPanel implements Observer {
 	private DefaultListModel motifs;
 	private RenderingHints hints;
 
+	/**
+	 * Création d'une nouvelle instance de la classe Dessin.
+	 * 
+	 * @param c Groupe d'écoutes
+	 * @param width Largeur
+	 * @param height Hauteur
+	 */
 	public Dessin(KeyMouseListener c, int width, int height) {
 	    super();
 	    this.setBackground(Color.WHITE);
@@ -37,6 +44,9 @@ public class Dessin extends JPanel implements Observer {
 		repaint();
 	}
 
+	/**
+	 * Permet de dessiner de nouveaux composants graphiques.
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2D = (Graphics2D) g;
@@ -45,16 +55,29 @@ public class Dessin extends JPanel implements Observer {
 		toutDessiner(g2D);
 	}
 
+	/**
+	 * Permet de mettre à jour la vue.
+	 */
 	public void update(Observable o, Object arg) {
 		repaint();
 	}
 
+	/**
+	 * Permet d'ajouter le motif sélectionné à la liste de motifs.
+	 * 
+	 * @param motifSelectionne Motif sélectionné
+	 */
 	public void ajouterMotif(Motif motifSelectionne) {
 		motifs.addElement(motifSelectionne);
 		motifSelectionne.addObserver(this);
 		repaint();
 	}
 
+	/**
+	 * Permet de dessiner un nouveau motif.
+	 * 
+	 * @param m Motif à dessiner
+	 */
 	public void dessiner(Graphics2D g, Motif m) {
 		g.setColor(m.getColor());
 		g.fill(m.getShape());
@@ -62,36 +85,67 @@ public class Dessin extends JPanel implements Observer {
 		g.draw(m.getShape());
 	}
 
+	/**
+	 * Retourne la largeur du motif courant.
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * Retourne la hauteur du motif courant.
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * Retourne la liste des motifs composants le dessin.
+	 * @return Liste des motifs
+	 */
 	public DefaultListModel getMotifs() {
 		return motifs;
 	}
 
-	public void setWidth(int l) {
-		this.width = l;
+	/**
+	 * Remplace la largeur du motif courant par la valeur passée en paramètre.
+	 * @param width Nouvelle largeur
+	 */
+	public void setWidth(int width) {
+		this.width = width;
+	}
+ 
+	/**
+	 * Remplace la hauteur du motif courant par la valeur passée en paramètre.
+	 * @param height Nouvelle hauteur
+	 */
+	public void setHeight(int height) {
+		this.height = height;
 	}
 
-	public void setHeight(int h) {
-		this.height = h;
-	}
-
+	/**
+	 * Supprime le motif passé en paramètre.
+	 * @param motif Motif à supprimer
+	 */
 	public void supprimerMotif(Motif motif) {
 		motifs.removeElement(motif);
 		repaint();
 	}
 
+	/**
+	 * Supprime le motif situé à l'index passé en paramètre.
+	 * @param indice Indice du motif à supprimer
+	 */
 	public void supprimerMotif(int indice) {
 		motifs.remove(indice);
 		repaint();
 	}
 
+	/**
+	 * Retourne le motif contenant le point passé en paramètre.
+	 * @param p Point
+	 * @return Motif contenant p
+	 */
 	public Motif getShape(Point p) {
 		Enumeration itr;
 		Motif tmp;
@@ -109,6 +163,9 @@ public class Dessin extends JPanel implements Observer {
 		return "";
 	}
 
+	/**
+	 * Dessine l'intégralité des motifs.
+	 */
 	public void toutDessiner(Graphics2D g) {
 		Enumeration itr;
 

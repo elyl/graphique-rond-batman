@@ -14,6 +14,10 @@ public class Proprietees extends JPanel implements Observer {
 	private JTextField f_Height;
 	private Motif motif;
 
+	/**
+	 * Créé une instance de la classe Proprietees.
+	 * @param c Groupe d'écoutes
+	 */
 	public Proprietees(KeyListener c) {
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
@@ -128,6 +132,10 @@ public class Proprietees extends JPanel implements Observer {
         add(f_Width,  gbc);        
 	}
 
+	/**
+	 * Met à jour les paramètres du motif passé en paramètres à partir des informations contenues dans les champs des propriétées.
+	 * @param m Motif
+	 */
 	public void updateData(Motif m) {
 		updateData(m.getName(), m.getX(), m.getY(), m.getWidth(), m.getHeight(),
 				m.getColor());
@@ -137,6 +145,15 @@ public class Proprietees extends JPanel implements Observer {
 		m.addObserver(this);
 	}
 
+	/**
+	 * Met à jour les informations contenues dans les champs des propriétées à partir des informations passées en paramètres.
+	 * @param name Nom
+	 * @param x Abscisse
+	 * @param y Ordonnée
+	 * @param width Largeur
+	 * @param height Hauteur
+	 * @param color Couleur
+	 */
 	public void updateData(String name, int x, int y, int width, int height, Color color) {
 		f_Name.setText(name);
 		f_X.setText(new Integer(x).toString());
@@ -147,30 +164,51 @@ public class Proprietees extends JPanel implements Observer {
 		repaint();
 	}
 
+	/**
+	 * Met à jour le modèle.
+	 */
 	public void update(Observable obs, Object o) {
 		updateData((Motif) obs);
 	}
 	
+	/**
+	 * Retourne le texte contenu dans le champ "Nom".
+	 */
 	public String getName() {
 		return f_Name.getText();
 	}
 
+	/**
+	 * Retourne le texte contenu dans le champ "Coordonnée X".
+	 */
 	public String getfX() {
 		return f_X.getText();
 	}
 
+	/**
+	 * Retourne le texte contenu dans le champ "Coordonnée Y".
+	 */
 	public String getfY() {
 		return f_Y.getText();
 	}
 
+	/**
+	 * Retourne le texte contenu dans le champ "Largeur".
+	 */
 	public String getfWidth() {
 		return f_Width.getText();
 	}
 
+	/**
+	 * Retourne le texte contenu dans le champ "Hauteur".
+	 */
 	public String getfHeight() {
 		return f_Height.getText();
 	}
 
+	/**
+	 * Retourne le texte contenu dans le champ "Couleur".
+	 */
 	public String getfColor() {
 		return f_Color.getText();
 	}

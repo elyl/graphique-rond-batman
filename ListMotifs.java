@@ -15,6 +15,11 @@ import java.awt.Label;
 public class ListMotifs extends JPanel {
 	private JList jlist;
 
+	/**
+	 * Créé une nouvelle instance de la classe ListMotifs.
+	 * @param c Groupe d'écoutes
+	 * @param motifs Liste des motifs composants le dessin
+	 */
 	public ListMotifs(ListActionListener c, DefaultListModel motifs) {
 		JButton tmp;
 		JScrollPane listScrollPane;
@@ -60,14 +65,26 @@ public class ListMotifs extends JPanel {
 		add(buttonPane, gbc);
 	}
 
+	/**
+	 * Retourne  l'index sélectionné de la liste.
+	 * @return in Index
+	 */
 	public int getSelectedIndex() {
-		return (jlist.getSelectedIndex());
+		return jlist.getSelectedIndex();
 	}
 
+	/**
+	 * Retourne la taille de la liste courante.
+	 * @return int Taille
+	 */
 	public int getListSize() {
-		return (jlist.getModel().getSize());
+		return jlist.getModel().getSize();
 	}
 
+	/**
+	 * Sélectionne l'index de la liste passé en paramètre.
+	 * @param index Index
+	 */
 	public void setSelectedIndex(int index) {
 		jlist.setSelectedIndex(index);
 	}

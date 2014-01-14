@@ -8,6 +8,11 @@ import java.awt.event.ActionListener;
 
 @SuppressWarnings("serial")
 public class Menu extends JPanel {
+	
+	/**
+	 * Créé une nouvelle instance de la classe Menu.
+	 * @param e ActionListener
+	 */
 	public Menu(ActionListener e) {
 		JButton tmp;
 		String tab[] = {"Importer", "Exporter", "<-", "->", "Ligne", "Carré", "Rectangle", "Cercle", "Ellipse"};

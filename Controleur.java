@@ -14,9 +14,11 @@ import java.awt.event.MouseWheelEvent;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
+
+/**
+ * @author Lisa BERGERON, Antoine DERANTON, Axel LHEUREUX
+ */
 
 public class Controleur {
 	private Dessin draw;
@@ -39,16 +41,6 @@ public class Controleur {
 		frame.setLayout(new GridBagLayout());
 
 		draw = new Dessin(new ControleurDessin(), 1200, 500);
-		
-		// Définition de la palette de couleurs
-		colorChooser = new JColorChooser(Color.RED);
-		colorChooser.setPreviewPanel(new JPanel());
-		colorChooser.getSelectionModel().addChangeListener(new ChangeListener(){
-			public void stateChanged(ChangeEvent e)
-			{
-			    currentColor = colorChooser.getColor();
-			}
-		    });
 		
 		// Définition de la liste des figures dans leur ordre de superposition
 		jlist = new ListMotifs(new ControleurList(), draw.getMotifs());
@@ -106,6 +98,9 @@ public class Controleur {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Sélectionne une forme si le point p passé en paramètre lui appartient.
+	 */
 	public void selectItem(Point p) {
 		Motif tmp;
 
@@ -114,6 +109,10 @@ public class Controleur {
 			selectItem(tmp);
 	}
 
+	/**
+	 * Sélectionne le motif passé en paramètre.
+	 * @param m Une instance de la classe Motif.
+	 */
 	public void selectItem(Motif m) {
 		if (motive != null)
 			motive.setSelected(false);
@@ -121,16 +120,22 @@ public class Controleur {
 		properties.updateData(m);
 		motive = m;
 	}
-	
+
 	private class ControleurDessin extends KeyMouseListener {
 		private int x;
 		private int y;
 
+		/**
+		 * Action réalisée lors de l'évènement "clic de la souris".
+		 */
 		public void mouseClicked(MouseEvent e) {
 			draw.requestFocus();
 			selectItem(new Point(e.getX(), e.getY()));
 		}
 		
+		/**
+		 * Action réalisée lors de l'évènement "déplacement appuyé de la souris".
+		 */
 		public void mouseDragged(MouseEvent e) {
 			if (motive != null && curentShapeType == Motif.NULL) {
 				motive.setX(motive.getX() + e.getX() - x);
@@ -142,6 +147,9 @@ public class Controleur {
 			}
 		}
 
+		/**
+		 * Action réalisée lors de l'évènement "clic appuyé de la souris".
+		 */
 		public void mousePressed(MouseEvent e) {
 			x = e.getX();
 			y = e.getY();
@@ -157,6 +165,9 @@ public class Controleur {
 			System.out.println(motive);
 		}
 
+		/**
+		 * Action réalisée lors de l'évènement "relâchement du clic de la souris".
+		 */
 		public void mouseReleased(MouseEvent e) {
 			if (motive != null && curentShapeType == 0) {
 				motive.setX(motive.getX() + e.getX() - x);
@@ -165,6 +176,9 @@ public class Controleur {
 			curentShapeType = Motif.NULL;
 		}
 
+		/**
+		 * Action réalisée lors de l'évènement "touche du clavier appuyée".
+		 */
 		public void keyPressed(KeyEvent e) {
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_LEFT:
@@ -198,7 +212,10 @@ public class Controleur {
 				break;
 			}
 		}
-
+		
+		/**
+		 * Action réalisée lors de l'évènement "molette de la souris utilisée".
+		 */
 		public void mouseWheelMoved(MouseWheelEvent e) {
 			int n = e.getWheelRotation();
 
@@ -208,13 +225,14 @@ public class Controleur {
 				motive.scaleUp();
 		}
 
-		public void keyTyped(KeyEvent e) { }
-
 	}
 
 	private class ControleurMenu implements ActionListener {
+		/**
+		 * Actions réalisées aux clics sur les différents boutons composants le menu.
+		 */
 		public void actionPerformed(ActionEvent e) {
-		    //currentColor = colorChooser.getColor();
+			currentColor = colorChooser.getColor();
 			if (e.getActionCommand().equals("Rectangle"))
 				curentShapeType = Motif.RECTANGLE;
 			else if (e.getActionCommand().equals("Carré"))
@@ -234,6 +252,9 @@ public class Controleur {
 	}
 
 	private class ControleurProprietees extends KeyAdapter {
+		/**
+		 * Action réalisée lors de l'évènement "texte entrant au clavier".
+		 */
 		public void keyTyped(KeyEvent e) {
 			Color c;
 
@@ -250,6 +271,9 @@ public class Controleur {
 	}
 
 	private class ControleurList extends ListActionListener {
+		/**
+		 * Action 
+		 */
 		public void valueChanged(ListSelectionEvent e) {
 			Motif tmp;
 
@@ -259,6 +283,9 @@ public class Controleur {
 			}
 		}
 
+		/**
+		 * Actions réalisées aux clics sur les différents boutons rattachés à la liste des figures.
+		 */
 		public void actionPerformed(ActionEvent e) {
 			int index;
 			Motif tmp;
