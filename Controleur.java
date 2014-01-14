@@ -14,6 +14,8 @@ import java.awt.event.MouseWheelEvent;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 
 public class Controleur {
@@ -37,6 +39,16 @@ public class Controleur {
 		frame.setLayout(new GridBagLayout());
 
 		draw = new Dessin(new ControleurDessin(), 1200, 500);
+		
+		// Définition de la palette de couleurs
+		colorChooser = new JColorChooser(Color.RED);
+		colorChooser.setPreviewPanel(new JPanel());
+		colorChooser.getSelectionModel().addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent e)
+			{
+			    currentColor = colorChooser.getColor();
+			}
+		    });
 		
 		// Définition de la liste des figures dans leur ordre de superposition
 		jlist = new ListMotifs(new ControleurList(), draw.getMotifs());
@@ -109,7 +121,7 @@ public class Controleur {
 		properties.updateData(m);
 		motive = m;
 	}
-
+	
 	private class ControleurDessin extends KeyMouseListener {
 		private int x;
 		private int y;
@@ -196,11 +208,13 @@ public class Controleur {
 				motive.scaleUp();
 		}
 
+		public void keyTyped(KeyEvent e) { }
+
 	}
 
 	private class ControleurMenu implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			currentColor = colorChooser.getColor();
+		    //currentColor = colorChooser.getColor();
 			if (e.getActionCommand().equals("Rectangle"))
 				curentShapeType = Motif.RECTANGLE;
 			else if (e.getActionCommand().equals("Carré"))
