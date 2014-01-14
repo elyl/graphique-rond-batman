@@ -210,6 +210,13 @@ public class Controleur {
 					motiveCopie = motiveCopie.clone();
 				}
 				break;
+			case KeyEvent.VK_X:
+			    if (e.isControlDown())
+				{
+				    motiveCopie = motive.clone();
+				    draw.supprimerMotif(motive);
+				}
+			    break;
 			}
 		}
 		
@@ -266,6 +273,7 @@ public class Controleur {
 						Integer.parseInt(properties.getfWidth()),
 						Integer.parseInt(properties.getfHeight()));
 				motive.setColor(c);
+				jlist.repaint();
 			}
 		}
 	}

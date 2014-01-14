@@ -160,7 +160,7 @@ public class Proprietees extends JPanel implements Observer {
 		f_Y.setText(new Integer(y).toString());
 		f_Width.setText(new Integer(width).toString());
 		f_Height.setText(new Integer(height).toString());
-		f_Color.setText("#" + (Integer.toHexString(color.getRed()) + Integer.toHexString(color.getGreen()) + Integer.toHexString(color.getBlue())).toUpperCase());
+		f_Color.setText("#" + Integer.toHexString(color.getRGB()).substring(2));
 		repaint();
 	}
 
