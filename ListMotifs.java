@@ -2,48 +2,73 @@ import javax.swing.DefaultListModel;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionListener;
+
 import java.awt.event.ActionListener;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Label;
 
-public class ListMotifs extends JPanel
-{
-    private JList	jlist;
+public class ListMotifs extends JPanel {
+	private JList jlist;
 
-    public ListMotifs(ListActionListener c, DefaultListModel motifs)
-    {
-	JButton	tmp;
-	JPanel	p;
+	public ListMotifs(ListActionListener c, DefaultListModel motifs) {
+		JButton tmp;
+		JScrollPane listScrollPane;
+		JPanel buttonPane;
+		
+		jlist = new JList(motifs);
+		jlist.addListSelectionListener(c);
+		jlist.setVisibleRowCount(5);
+		listScrollPane = new JScrollPane(jlist);
+		
+		buttonPane = new JPanel();
+		buttonPane.setLayout(new GridLayout(2, 1));
+		tmp = new JButton("+");
+		tmp.addActionListener(c);
+		buttonPane.add(tmp);
+		tmp = new JButton("-");
+		tmp.addActionListener(c);
+		buttonPane.add(tmp);
 
-	setLayout(new GridLayout(1, 2));
-	jlist = new JList(motifs);
-	jlist.addListSelectionListener(c);
-	jlist.setVisibleRowCount(5);
-	add(jlist);
-	p = new JPanel();
-	p.setLayout(new GridLayout(2, 1));
-	tmp = new JButton("+");
-	tmp.addActionListener(c);
-	p.add(tmp);
-	tmp = new JButton("-");
-	tmp.addActionListener(c);
-	p.add(tmp);
-	add(p);
-    }
+		setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+		gbc.anchor = GridBagConstraints.CENTER;
 
-    public int getSelectedIndex()
-    {
-	return (jlist.getSelectedIndex());
-    }
-    
-    public int getListSize()
-    {
-	return (jlist.getModel().getSize());
-    }
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridwidth = 3;
+		add(new Label("Ordre de superposition"), gbc);
 
-    public void setSelectedIndex(int index)
-    {
-	jlist.setSelectedIndex(index);
-    }
+		gbc.gridx = 0;
+		gbc.gridy = 1;
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.BOTH; 
+		gbc.weightx = 1.0;
+		gbc.weighty = 1.0;
+		add(listScrollPane, gbc);
+		
+		gbc.gridx = 2;
+		gbc.gridy = 1;
+		gbc.gridwidth = 1;
+		gbc.fill = GridBagConstraints.NONE; 
+		gbc.weightx = 0.0;
+		gbc.weighty = 0.0;
+		add(buttonPane, gbc);
+	}
+
+	public int getSelectedIndex() {
+		return (jlist.getSelectedIndex());
+	}
+
+	public int getListSize() {
+		return (jlist.getModel().getSize());
+	}
+
+	public void setSelectedIndex(int index) {
+		jlist.setSelectedIndex(index);
+	}
 }

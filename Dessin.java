@@ -4,15 +4,14 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.RenderingHints;
 
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
+import javax.swing.JPanel;
 
 import java.util.Enumeration;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.*;
-
-@SuppressWarnings("serial")
 public class Dessin extends JPanel implements Observer {
 	private int width;
 	private int height;
